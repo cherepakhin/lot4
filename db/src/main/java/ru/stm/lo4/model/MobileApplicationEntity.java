@@ -21,5 +21,6 @@ import javax.persistence.Id;
 public class MobileApplicationEntity {
     @Id
     Long id;
+    String name;
     String version;
 }
