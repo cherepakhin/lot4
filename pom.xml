@@ -22,7 +22,6 @@
 		<module>sender-app</module>
 		<module>dto</module>
         <module>receiver-app</module>
-		<module>phoneApp</module>
     </modules>
 	<dependencies>
 		<dependency>
