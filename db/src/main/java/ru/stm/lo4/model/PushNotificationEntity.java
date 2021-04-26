@@ -30,4 +30,5 @@ public class PushNotificationEntity {
     @OneToMany
     Set<PhoneEntity> phones = new HashSet<>();
     Date data;
+    PushNotificationStatusEnum status;
 }
