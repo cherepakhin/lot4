@@ -1,4 +1,4 @@
-package ru.stm.lo4.model;
+package ru.stm.lot4.dto;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -8,21 +8,14 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PhoneEntity {
-    @Id
+public class MobileApplicationDto {
     Long id;
-    String number;
-    @ManyToOne
-    MobileApplicationEntity app;
+    String token;
+    String version;
 }

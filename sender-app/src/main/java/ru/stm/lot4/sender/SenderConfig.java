@@ -9,8 +9,11 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import ru.stm.lot4.dto.PushNotificationDto;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +27,9 @@ public class SenderConfig {
     private String nameGroup;
     @Value("${kafka.topic}")
     private String topic;
+
+    @Value("${fcm.service-account-file}")
+    private String fcmServiceAccountFile;
 
     @Bean
     public Map<String, Object> consumerConfigs() {
@@ -40,8 +46,8 @@ public class SenderConfig {
      * Factory для читателя Kafka
      */
     @Bean
-    public ConsumerFactory<String, Map> consumerFactory() {
-        final JsonDeserializer jsonDeserializer = new JsonDeserializer<>();
+    public ConsumerFactory<String, PushNotificationDto> consumerFactory() {
+        final JsonDeserializer<PushNotificationDto> jsonDeserializer = new JsonDeserializer<>();
         jsonDeserializer.addTrustedPackages("*");
         ErrorHandlingDeserializer errorHandlingDeserializer
                 = new ErrorHandlingDeserializer<>(jsonDeserializer);
@@ -57,32 +63,37 @@ public class SenderConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Map> kafkaListenerContainerFactory(
+    public ConcurrentKafkaListenerContainerFactory<String, PushNotificationDto> kafkaListenerContainerFactory(
             KafkaErrorHandler kafkaErrorHandler
     ) {
-        ConcurrentKafkaListenerContainerFactory<String, Map> factory =
+        ConcurrentKafkaListenerContainerFactory<String, PushNotificationDto> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setErrorHandler(kafkaErrorHandler);
         return factory;
     }
 
+    @Bean
+    FirebaseSenderService firebaseSenderService() {
+        return new FirebaseSenderService(fcmServiceAccountFile);
+    }
+
+
     /**
-     * Привязка Kafka-listener к сервису отправки событий в ElasticSearch
+     * Привязка Kafka-listener к сервису отправки событий в FirebaseSenderService
      */
-//    @Bean
-//    public KafkaMessageListenerContainer<String, Map> elasticSearchEventLogConsumerContainer(
-//            ElasticSearchService elasticSearchService,
-//            ConsumerFactory<String, Map> consumerFactory,
-//            KafkaErrorHandler kafkaErrorHandler) {
-//        ContainerProperties containerProps = new ContainerProperties(topic);
-//        containerProps.setGroupId(nameGroup);
-//        ElasticSearchEventLogConsumer elasticSearchEventLogConsumer
-//                = new ElasticSearchEventLogConsumer(elasticSearchService, elasticsearchNameIndex,qtyPartsIndex);
-//        containerProps.setMessageListener(elasticSearchEventLogConsumer);
-//        KafkaMessageListenerContainer<String, Map> container =
-//                new KafkaMessageListenerContainer<>(consumerFactory, containerProps);
-//        container.setErrorHandler(kafkaErrorHandler);
-//        return container;
-//    }
+    @Bean
+    public KafkaMessageListenerContainer<String, PushNotificationDto> firebaseConsumerContainer(
+            FirebaseSenderService firebaseSenderService,
+            ConsumerFactory<String, PushNotificationDto> consumerFactory,
+            KafkaErrorHandler kafkaErrorHandler) {
+        ContainerProperties containerProps = new ContainerProperties(topic);
+        containerProps.setGroupId(nameGroup);
+        KafkaConsumer kafkaConsumer = new KafkaConsumer(firebaseSenderService);
+        containerProps.setMessageListener(kafkaConsumer);
+        KafkaMessageListenerContainer<String, PushNotificationDto> container =
+                new KafkaMessageListenerContainer<>(consumerFactory, containerProps);
+        container.setErrorHandler(kafkaErrorHandler);
+        return container;
+    }
 }

@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Setter
 @Getter
@@ -19,10 +18,9 @@ import javax.persistence.ManyToOne;
 @EqualsAndHashCode
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PhoneEntity {
+public class MobileApplicationEntity {
     @Id
     Long id;
-    String number;
-    @ManyToOne
-    MobileApplicationEntity app;
+    String token;
+    String version;
 }
