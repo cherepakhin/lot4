@@ -7,5 +7,6 @@ import ru.stm.lo4.model.MobileApplicationEntity;
 
 @Transactional
 @Repository
-public interface AppRepository extends JpaRepository<MobileApplicationEntity, Long> {
+public interface MobileApplicationRepository extends JpaRepository<MobileApplicationEntity, Long> {
+    MobileApplicationEntity findByVersion(String version);
 }
