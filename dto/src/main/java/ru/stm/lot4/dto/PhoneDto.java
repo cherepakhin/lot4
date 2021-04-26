@@ -16,5 +16,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PhoneDto {
     String number;
+    String token;
     MobileApplicationDto app;
 }

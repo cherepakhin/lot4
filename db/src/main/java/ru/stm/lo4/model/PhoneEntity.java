@@ -23,6 +23,7 @@ public class PhoneEntity {
     @Id
     Long id;
     String number;
+    String token;
     @ManyToOne
     MobileApplicationEntity app;
 }
