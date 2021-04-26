@@ -1,0 +1,9 @@
+kafka:
+  host: ${KAFKA_HOST:127.0.0.1:9092}
+  topic: ${KAFKA_TOPIC:lot4-messages}
+  # Имя группы kafka для нескольких consumers
+  namegroup: ${KAFKA_NAME_GROUP:lot4-senders}
+
+fcm:
+  service-account-file: firebase_key.json
+  ttl: 5
