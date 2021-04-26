@@ -17,5 +17,5 @@ public class PhoneEntity {
     Long id;
     String number;
     @ManyToOne
-    App app;
+    AppEntity app;
 }

@@ -21,6 +21,6 @@ public class MessageEntity {
     String title = "";
     String body = "";
     @OneToMany
-    Set<Phone> phones = new HashSet<>();
+    Set<PhoneEntity> phones = new HashSet<>();
     Date data;
 }
