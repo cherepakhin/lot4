@@ -19,6 +19,7 @@
 	<modules>
 		<module>model</module>
 		<module>app</module>
+		<module>sender</module>
 	</modules>
 	<dependencies>
 		<dependency>
