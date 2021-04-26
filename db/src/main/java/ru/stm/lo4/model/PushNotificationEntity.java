@@ -8,9 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,8 +20,10 @@ import java.util.Set;
 @EqualsAndHashCode
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "push_notification")
 public class PushNotificationEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String title = "";
     String body = "";

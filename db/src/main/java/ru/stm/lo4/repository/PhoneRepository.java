@@ -8,4 +8,5 @@ import ru.stm.lo4.model.PhoneEntity;
 @Repository
 @Transactional
 public interface PhoneRepository extends JpaRepository<PhoneEntity, Long> {
+    Integer deleteByToken(String token);
 }

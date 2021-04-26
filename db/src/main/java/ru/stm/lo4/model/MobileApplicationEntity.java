@@ -8,8 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Setter
 @Getter
@@ -18,8 +17,10 @@ import javax.persistence.Id;
 @EqualsAndHashCode
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "mobile_application")
 public class MobileApplicationEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
     String version;
