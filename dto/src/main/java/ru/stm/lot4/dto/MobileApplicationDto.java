@@ -16,6 +16,5 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MobileApplicationDto {
     Long id;
-    String token;
     String version;
 }
