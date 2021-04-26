@@ -1,6 +1,12 @@
 package ru.stm.lo4.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,7 +21,8 @@ import java.util.Set;
 @ToString
 @EqualsAndHashCode
 @Entity
-public class MessageEntity {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class PushNotificationEntity {
     @Id
     Long id;
     String title = "";
