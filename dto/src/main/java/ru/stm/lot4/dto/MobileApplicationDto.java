@@ -14,8 +14,7 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PhoneDto {
-    String number;
-    String token;
-    MobileApplicationDto app;
+public class MobileApplicationDto {
+    Long id;
+    String version;
 }

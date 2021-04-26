@@ -19,10 +19,10 @@
 	<modules>
 		<module>db</module>
 		<module>app</module>
-		<module>sender</module>
+		<module>sender-app</module>
 		<module>dto</module>
-		<module>statisticApp</module>
-	</modules>
+        <module>receiver-app</module>
+    </modules>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,5 +48,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
+		</dependency>
+
+
+
 	</dependencies>
 </project>

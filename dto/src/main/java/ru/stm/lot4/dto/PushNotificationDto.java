@@ -8,14 +8,18 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PhoneDto {
-    String number;
-    String token;
-    MobileApplicationDto app;
+public class PushNotificationDto {
+    Long id;
+    String title = "";
+    String body = "";
+    Set<PhoneDto> phones = new HashSet<>();
 }
