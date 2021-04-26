@@ -19,9 +19,10 @@
 	<modules>
 		<module>db</module>
 		<module>app</module>
-		<module>sender</module>
+		<module>sender-app</module>
 		<module>dto</module>
-	</modules>
+        <module>receiver-app</module>
+    </modules>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
