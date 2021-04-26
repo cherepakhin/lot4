@@ -7,8 +7,8 @@ CREATE TABLE if not exists push_notification (
 	"id"            serial          not null UNIQUE,
 	"title"         varchar(255)    not null,
     "body"          text            not null,
-    "date"          timestamp            not null,
-    "status"        int             not null,
+    "date"          timestamp       not null,
+    "status"        int                       DEFAULT 0,
     "phone_id"      serial          not null
 );
 

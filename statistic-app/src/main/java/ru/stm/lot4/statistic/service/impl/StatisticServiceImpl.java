@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.stm.lot4.model.MobileApplicationStatisticEntity;
 import ru.stm.lot4.model.PushNotificationEntity;
 import ru.stm.lot4.model.PushNotificationStatusEnum;
-import ru.stm.lot4.repository.MessageRepository;
+import ru.stm.lot4.repository.PushNotificationRepository;
 import ru.stm.lot4.repository.MobileApplicationRepository;
 import ru.stm.lot4.statistic.dto.MessageDto;
 import ru.stm.lot4.statistic.service.StatisticService;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class StatisticServiceImpl implements StatisticService {
     private final MobileApplicationRepository mobileApplicationRepository;
-    private final MessageRepository messageRepository;
+    private final PushNotificationRepository pushNotificationRepository;
 
     @Override
     public List<MobileApplicationStatisticEntity> getApplicationStat() {
@@ -31,7 +31,7 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public List<MessageDto> getMessagesByPhone(String phone, Pageable page) {
         log.info("Get received messages by phone {}", phone);
-        List<PushNotificationEntity> messages = messageRepository.findReceivedMessagesByPhoneAndStatus(phone,
+        List<PushNotificationEntity> messages = pushNotificationRepository.findReceivedMessagesByPhoneAndStatus(phone,
                 PushNotificationStatusEnum.NOT_AVAILABLE.getCode(),
                 page);
         log.info("Found {} messages", messages.size());
@@ -41,7 +41,7 @@ public class StatisticServiceImpl implements StatisticService {
     private List<MessageDto> pushNotificationToDto(List<PushNotificationEntity> messages) {
         log.info("Convert {} messages to dto", messages.size());
         return messages.stream()
-                .map(message -> new MessageDto(message.getTitle(), message.getBody(), message.getData()))
+                .map(message -> new MessageDto(message.getTitle(), message.getBody(), message.getDate()))
                 .collect(Collectors.toList());
     }
 }
