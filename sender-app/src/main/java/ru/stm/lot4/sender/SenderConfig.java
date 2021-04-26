@@ -30,6 +30,8 @@ public class SenderConfig {
 
     @Value("${fcm.service-account-file}")
     private String fcmServiceAccountFile;
+    @Value("${fcm.ttl}")
+    private String ttl;
 
     @Bean
     public Map<String, Object> consumerConfigs() {
@@ -75,7 +77,7 @@ public class SenderConfig {
 
     @Bean
     FirebaseSenderService firebaseSenderService() {
-        return new FirebaseSenderService(fcmServiceAccountFile);
+        return new FirebaseSenderService(fcmServiceAccountFile,ttl);
     }
 
 

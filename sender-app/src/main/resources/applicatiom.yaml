@@ -6,3 +6,4 @@ kafka:
 
 fcm:
   service-account-file: firebase_key.json
+  ttl: 5

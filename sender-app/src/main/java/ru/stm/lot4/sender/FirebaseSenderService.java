@@ -6,8 +6,8 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.WebpushConfig;
+import com.google.firebase.messaging.WebpushNotification;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import ru.stm.lot4.dto.PushNotificationDto;
 
 import java.io.IOException;
@@ -15,12 +15,15 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.stream.Stream;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 public class FirebaseSenderService {
 
-    public FirebaseSenderService(String fcmServiceAccountFile) {
+    private String ttl;
+
+    public FirebaseSenderService(String fcmServiceAccountFile, String ttl) {
+        this.ttl = ttl;
         Path p = Paths.get(fcmServiceAccountFile);
         try (InputStream serviceAccount = Files.newInputStream(p)) {
             FirebaseOptions options = new FirebaseOptions.Builder()
@@ -33,17 +36,31 @@ public class FirebaseSenderService {
         }
     }
 
-    public void send(PushNotificationDto pushNotificationDto) {
-        pushNotificationDto.getPhones().stream().forEach(phoneDto -> send(phoneDto.getApp().getToken());
-        Message message = Message.builder().setToken(pushNotificationDto.)
+    public void send(PushNotificationDto dto) {
+        dto.getPhones().stream().forEach(phoneDto ->
+                send(phoneDto.getToken(), dto.getTitle(), dto.getBody()));
+    }
+
+    private void send(String token, String title, String body) {
+        Message message = Message.builder().setToken(token)
                 .setWebpushConfig(WebpushConfig.builder()
-                        .putHeader("ttl", conf.getTtlInSeconds())
-                        .setNotification(createBuilder(conf).build())
+                        .putHeader("ttl", ttl)
+                        .setNotification(new WebpushNotification(title, body))
                         .build())
                 .build();
 
-        String response = FirebaseMessaging.getInstance()
-                .sendAsync(message)
-                .get();
+        String response = null;
+        try {
+            response = FirebaseMessaging.getInstance()
+                    .sendAsync(message)
+                    .get();
+            log.info(response);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
     }
 }
