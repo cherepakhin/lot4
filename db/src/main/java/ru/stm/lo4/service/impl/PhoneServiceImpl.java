@@ -16,4 +16,9 @@ public class PhoneServiceImpl implements PhoneService {
     public PhoneEntity save(PhoneEntity phoneEntity) {
         return phoneRepository.save(phoneEntity);
     }
+
+    @Override
+    public Integer deleteByToken(String token) {
+        return phoneRepository.deleteByToken(token);
+    }
 }
