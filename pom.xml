@@ -21,6 +21,7 @@
 		<module>app</module>
 		<module>sender</module>
 		<module>dto</module>
+		<module>statisticApp</module>
 	</modules>
 	<dependencies>
 		<dependency>
