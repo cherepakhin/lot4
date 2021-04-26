@@ -1,9 +1,7 @@
-package ru.stm.lo4.model;
+package ru.stm.lot4.dto;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,12 +11,9 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Entity
-public class Message {
-    @Id
+public class MessageDto {
     Long id;
     String title = "";
     String body = "";
-    @OneToMany
-    Set<Phone> phones = new HashSet<>();
+    Set<PhoneDto> phones = new HashSet<>();
 }

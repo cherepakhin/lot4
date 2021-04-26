@@ -17,9 +17,10 @@
 		<relativePath/>
 	</parent>
 	<modules>
-		<module>model</module>
+		<module>db</module>
 		<module>app</module>
 		<module>sender</module>
+		<module>dto</module>
 	</modules>
 	<dependencies>
 		<dependency>

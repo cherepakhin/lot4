@@ -1,18 +1,13 @@
-package ru.stm.lo4.model;
+package ru.stm.lot4.dto;
 
 import lombok.*;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Entity
-public class App {
-    @Id
+public class AppDto {
     Long id;
     String token;
     String version;
