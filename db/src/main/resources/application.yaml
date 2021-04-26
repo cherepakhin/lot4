@@ -4,4 +4,4 @@ spring:
     username: ${PG_USER:postgres}
     password: ${PG_PASSWORD:postgres}
   flyway:
-    enabled: false
+    enabled: true
