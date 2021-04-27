@@ -1,0 +1,14 @@
+receiver:
+  schedule:
+    rate: 15
+kafka:
+  bootstrapAddress: ${KAFKA_HOST:localhost:2182}
+  topic: ${KAFKA_TOPIC:lot4-messages}
+  namegroup: ${KAFKA_NAME_GROUP:lot4-senders}
+spring:
+  datasource:
+    url: ${PG_URL:jdbc:postgresql://localhost:5432/db}
+    username: ${PG_USER:postgres}
+    password: ${PG_PASSWORD:admin}
+  flyway:
+    enabled: true
