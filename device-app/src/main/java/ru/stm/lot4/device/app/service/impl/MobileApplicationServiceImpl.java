@@ -1,11 +1,11 @@
-package ru.stm.lot4.service.impl;
+package ru.stm.lot4.device.app.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.stm.lot4.model.MobileApplicationEntity;
 import ru.stm.lot4.repository.MobileApplicationRepository;
-import ru.stm.lot4.service.MobileApplicationService;
+import ru.stm.lot4.device.app.service.MobileApplicationService;
 
 @Service
 @RequiredArgsConstructor

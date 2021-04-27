@@ -52,7 +52,6 @@ public class PushNotificationSchedulerServiceImpl implements PushNotificationSch
 
     private void sendToKafka(PushNotificationEntity pushNotificationEntity) {
         try {
-            log.info("send");
             PushNotificationDto pushNotificationDto = mapper.toDTO(pushNotificationEntity);
             pushNotificationSenderService.send(pushNotificationDto, receiveCallback(pushNotificationEntity));
         } catch (JsonProcessingException e) {

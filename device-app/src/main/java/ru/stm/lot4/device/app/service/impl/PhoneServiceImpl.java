@@ -1,10 +1,10 @@
-package ru.stm.lot4.service.impl;
+package ru.stm.lot4.device.app.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.stm.lot4.model.PhoneEntity;
 import ru.stm.lot4.repository.PhoneRepository;
-import ru.stm.lot4.service.PhoneService;
+import ru.stm.lot4.device.app.service.PhoneService;
 
 @Service
 @RequiredArgsConstructor
