@@ -26,36 +26,14 @@ public class DeviceServiceImpl implements DeviceService {
     @Transactional
     public PhoneEntity registryDevice(DeviceRegistryRequest deviceRegistryRequest) throws ValidationException {
 
-        String number = deviceRegistryRequest.getNumber();
+        String number = StringUtils.getDigits(deviceRegistryRequest.getNumber());
         String version = deviceRegistryRequest.getVersion();
         String token = deviceRegistryRequest.getFirebaseToken();
 
-        if (Objects.isNull(token)){
-            throw new ValidationException("Firebase token is empty.");
-        }
-
-        if (Objects.isNull(number)){
-            throw new ValidationException("Number is empty.");
-        }
-
-        if (Objects.isNull(version)){
-            throw new ValidationException("Version is empty.");
-        }
-
-        number = StringUtils.getDigits(number);
-
-        if (number.length() != 11
-                || (!number.startsWith("7")
-                && !number.startsWith("8"))){
-            throw new ValidationException("Not valid number. Please take in format +7xxxxxxxxxx or 8xxxxxxxxxx");
-        }
-
         MobileApplicationEntity mobileApplication = mobileApplicationService.findByVersion(version);
-
         if (Objects.isNull(mobileApplication)){
-            throw new ValidationException("Not valid version.");
+            throw new ValidationException("Not valid version!");
         }
-
 
         PhoneEntity phoneEntity = new PhoneEntity();
         phoneEntity.setNumber(number);
@@ -66,12 +44,8 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     @Transactional
-    public Integer deleteDeviceByToken(DeviceDeleteRequest deviceDeleteRequest) throws ValidationException, EmptyResultException {
+    public Integer deleteDeviceByToken(DeviceDeleteRequest deviceDeleteRequest) throws EmptyResultException {
         String token = deviceDeleteRequest.getFirebaseToken();
-
-        if(Objects.isNull(token)){
-            throw new ValidationException("Firebase token is empty.");
-        }
 
         Integer deletedCount = phoneService.deleteByToken(token);
         if (deletedCount == 0){

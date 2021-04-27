@@ -9,9 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableCaching
-@ComponentScan({"ru.stm"})
-@EntityScan("ru.stm.lot4.model")
-@EnableJpaRepositories("ru.stm.lot4.repository")
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
