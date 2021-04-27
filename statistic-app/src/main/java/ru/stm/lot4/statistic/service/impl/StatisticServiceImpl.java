@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.stm.lo4.model.MobileApplicationStatisticEntity;
-import ru.stm.lo4.model.PushNotificationEntity;
-import ru.stm.lo4.model.PushNotificationStatusEnum;
-import ru.stm.lo4.repository.MessageRepository;
-import ru.stm.lo4.repository.MobileApplicationRepository;
+import ru.stm.lot4.model.MobileApplicationStatisticEntity;
+import ru.stm.lot4.model.PushNotificationEntity;
+import ru.stm.lot4.model.PushNotificationStatusEnum;
+import ru.stm.lot4.repository.MessageRepository;
+import ru.stm.lot4.repository.MobileApplicationRepository;
 import ru.stm.lot4.statistic.dto.MessageDto;
 import ru.stm.lot4.statistic.service.StatisticService;
 

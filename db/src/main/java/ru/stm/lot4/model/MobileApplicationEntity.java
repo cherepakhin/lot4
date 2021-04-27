@@ -1,4 +1,4 @@
-package ru.stm.lo4.model;
+package ru.stm.lot4.model;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
-import static ru.stm.lo4.constants.QueryConstants.SELECT_APPLICATION_STATISTIC;
+import static ru.stm.lot4.constants.QueryConstants.SELECT_APPLICATION_STATISTIC;
 
 @Setter
 @Getter

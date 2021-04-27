@@ -1,17 +1,11 @@
 package ru.stm.lot4.statistic.controller;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.stm.lo4.repository.MessageRepository;
-import ru.stm.lo4.repository.MobileApplicationRepository;
+import ru.stm.lot4.repository.MobileApplicationRepository;
 import ru.stm.lot4.statistic.service.StatisticService;
 
 import javax.persistence.EntityManagerFactory;

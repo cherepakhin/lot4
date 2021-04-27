@@ -1,4 +1,4 @@
-package ru.stm.lo4.constants;
+package ru.stm.lot4.constants;
 
 public final class QueryConstants {
     public static final String SELECT_APPLICATION_STATISTIC =

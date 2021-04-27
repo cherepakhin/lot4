@@ -6,7 +6,7 @@ package ru.stm.lot4.statistic.service;
  */
 
 import org.springframework.data.domain.Pageable;
-import ru.stm.lo4.model.MobileApplicationStatisticEntity;
+import ru.stm.lot4.model.MobileApplicationStatisticEntity;
 import ru.stm.lot4.statistic.dto.MessageDto;
 
 import java.util.List;
