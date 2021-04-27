@@ -26,7 +26,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Transactional
     public PhoneEntity registryDevice(DeviceRegistryRequest deviceRegistryRequest) throws ValidationException {
 
-        String number = StringUtils.getDigits(deviceRegistryRequest.getNumber());
+        String number = deviceRegistryRequest.getNumber();
         String version = deviceRegistryRequest.getVersion();
         String token = deviceRegistryRequest.getFirebaseToken();
 
