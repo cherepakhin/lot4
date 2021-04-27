@@ -14,7 +14,7 @@ public class KafkaConsumer implements MessageListener<String, PushNotificationDt
 
     @Override
     public void onMessage(ConsumerRecord<String, PushNotificationDto> record) {
-        firebaseSenderService.send(record.value());
+        firebaseSenderService.sendAsync(record.value());
     }
 
 }

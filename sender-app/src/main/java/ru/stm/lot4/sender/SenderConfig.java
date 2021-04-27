@@ -17,6 +17,8 @@ import ru.stm.lot4.dto.PushNotificationDto;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Configuration
 @EnableKafka
@@ -28,10 +30,10 @@ public class SenderConfig {
     @Value("${kafka.topic}")
     private String topic;
 
-    @Value("${fcm.service-account-file}")
-    private String fcmServiceAccountFile;
-    @Value("${fcm.ttl}")
-    private String ttl;
+    @Value("${fcm.service-account-key}")
+    private String fcmServiceAccountKey;
+    @Value("${fcm.count-thread}")
+    private Integer fcmCountThread;
 
     @Bean
     public Map<String, Object> consumerConfigs() {
@@ -49,7 +51,7 @@ public class SenderConfig {
      */
     @Bean
     public ConsumerFactory<String, PushNotificationDto> consumerFactory() {
-        final JsonDeserializer<PushNotificationDto> jsonDeserializer = new JsonDeserializer<>();
+        final JsonDeserializer<PushNotificationDto> jsonDeserializer = new JsonDeserializer<>(PushNotificationDto.class);
         jsonDeserializer.addTrustedPackages("*");
         ErrorHandlingDeserializer errorHandlingDeserializer
                 = new ErrorHandlingDeserializer<>(jsonDeserializer);
@@ -77,9 +79,9 @@ public class SenderConfig {
 
     @Bean
     FirebaseSenderService firebaseSenderService() {
-        return new FirebaseSenderService(fcmServiceAccountFile,ttl);
+        ExecutorService executors = Executors.newFixedThreadPool(fcmCountThread);
+        return new FirebaseSenderService(fcmServiceAccountKey, executors);
     }
-
 
     /**
      * Привязка Kafka-listener к сервису отправки событий в FirebaseSenderService
