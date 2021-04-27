@@ -8,9 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Setter
 @Getter
@@ -19,8 +17,10 @@ import javax.persistence.ManyToOne;
 @EqualsAndHashCode
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "phone")
 public class PhoneEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String number;
     String token;

@@ -19,8 +19,9 @@ import static ru.stm.lo4.constants.QueryConstants.SELECT_APPLICATION_STATISTIC;
 @EqualsAndHashCode
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "mobile_application")
 @NamedNativeQuery(name ="MobileApplicationEntity.getStatistic", query = SELECT_APPLICATION_STATISTIC,
-                  resultSetMapping = "MobileApplicationStatistic")
+        resultSetMapping = "MobileApplicationStatistic")
 @SqlResultSetMapping(name="MobileApplicationStatistic",
         classes={
                 @ConstructorResult(targetClass = MobileApplicationStatisticEntity.class, columns={
@@ -32,6 +33,7 @@ import static ru.stm.lo4.constants.QueryConstants.SELECT_APPLICATION_STATISTIC;
 )
 public class MobileApplicationEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String version;
 }
