@@ -1,0 +1,1 @@
+mvn spring-boot:build-image -Dspring-boot.build-image.imageName=lot4/sender-app:1.0.0
