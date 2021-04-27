@@ -8,8 +8,8 @@ import ru.stm.lot4.device.app.exception.ValidationException;
 import ru.stm.lot4.device.app.service.DeviceService;
 import ru.stm.lot4.model.MobileApplicationEntity;
 import ru.stm.lot4.model.PhoneEntity;
-import ru.stm.lot4.service.MobileApplicationService;
-import ru.stm.lot4.service.PhoneService;
+import ru.stm.lot4.device.app.service.MobileApplicationService;
+import ru.stm.lot4.device.app.service.PhoneService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.stm.lot4.device.app.dto.DeviceDeleteRequest;
 import ru.stm.lot4.device.app.dto.DeviceRegistryRequest;
 import ru.stm.lot4.device.app.service.DeviceService;
-import ru.stm.lot4.service.MobileApplicationService;
+import ru.stm.lot4.device.app.service.MobileApplicationService;
 
 import javax.persistence.EntityManagerFactory;
 
