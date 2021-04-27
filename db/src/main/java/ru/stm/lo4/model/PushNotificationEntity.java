@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -29,6 +30,7 @@ public class PushNotificationEntity {
     String body = "";
     @OneToMany
     Set<PhoneEntity> phones = new HashSet<>();
+    @Column(name = "timestamp")
     Date data;
     PushNotificationStatusEnum status;
 }

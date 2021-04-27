@@ -9,9 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationStatisticEntity {
-    String appId;
-    String appKey;
-    Long countOfRegistration;
-    Long countOfUniquePhones;
+public class MobileApplicationStatisticEntity {
+    private String appVersion;
+    private Long registrationsCount;
+    private Long phoneNumbersCount;
 }

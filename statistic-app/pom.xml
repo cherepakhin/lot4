@@ -21,14 +21,6 @@
            <version>${project.parent.version}</version>
            <scope>compile</scope>
        </dependency>
-       <dependency>
-           <groupId>ru.stm</groupId>
-           <artifactId>dto</artifactId>
-           <version>1.0.0</version>
-           <scope>compile</scope>
-       </dependency>
    </dependencies>
-    <artifactId>statisticApp</artifactId>
-
-
+    <artifactId>statistic-app</artifactId>
 </project>

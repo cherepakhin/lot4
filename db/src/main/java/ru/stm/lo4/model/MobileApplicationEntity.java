@@ -8,8 +8,9 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import static ru.stm.lo4.constants.QueryConstants.SELECT_APPLICATION_STATISTIC;
 
 @Setter
 @Getter
@@ -18,9 +19,19 @@ import javax.persistence.Id;
 @EqualsAndHashCode
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@NamedNativeQuery(name ="MobileApplicationEntity.getStatistic", query = SELECT_APPLICATION_STATISTIC,
+                  resultSetMapping = "MobileApplicationStatistic")
+@SqlResultSetMapping(name="MobileApplicationStatistic",
+        classes={
+                @ConstructorResult(targetClass = MobileApplicationStatisticEntity.class, columns={
+                        @ColumnResult(name="appVersion", type=String.class),
+                        @ColumnResult(name="registrationsCount", type=Long.class),
+                        @ColumnResult(name="phoneNumbersCount", type=Long.class),
+                })
+        }
+)
 public class MobileApplicationEntity {
     @Id
     Long id;
-    String name;
     String version;
 }
