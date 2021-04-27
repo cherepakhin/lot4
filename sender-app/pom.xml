@@ -3,24 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>lot4</artifactId>
         <groupId>ru.stm</groupId>
+        <artifactId>lot4</artifactId>
         <version>1.0.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-
     <artifactId>sender-app</artifactId>
+    <modelVersion>4.0.0</modelVersion>
 
     <dependencies>
         <dependency>
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
-            <version>6.7.0</version>
+            <version>7.1.1</version>
         </dependency>
         <dependency>
             <groupId>ru.stm</groupId>
             <artifactId>dto</artifactId>
-            <version>1.0.0</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.kafka</groupId>

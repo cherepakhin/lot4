@@ -3,7 +3,6 @@ kafka:
   topic: ${KAFKA_TOPIC:lot4-messages}
   # Имя группы kafka для нескольких consumers
   namegroup: ${KAFKA_NAME_GROUP:lot4-senders}
-
 fcm:
-  service-account-file: firebase_key.json
-  ttl: 5
+  service-account-key: ${SERVICE_ACCOUNT_KEY:""}
+  count-thread: ${COUNT_THREAD:100}
