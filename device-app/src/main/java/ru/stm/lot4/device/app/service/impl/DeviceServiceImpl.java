@@ -3,9 +3,9 @@ package ru.stm.lot4.device.app.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import ru.stm.lo4.model.MobileApplicationEntity;
-import ru.stm.lo4.model.PhoneEntity;
-import ru.stm.lo4.service.MobileApplicationService;
+import ru.stm.lot4.model.MobileApplicationEntity;
+import ru.stm.lot4.model.PhoneEntity;
+import ru.stm.lot4.service.MobileApplicationService;
 import ru.stm.lot4.device.app.dto.DeviceRegistryRequest;
 import ru.stm.lot4.device.app.service.DeviceService;
 import ru.stm.lot4.device.app.dto.DeviceDeleteRequest;
@@ -19,7 +19,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class DeviceServiceImpl implements DeviceService {
 
-    private final ru.stm.lo4.service.PhoneService phoneService;
+    private final ru.stm.lot4.service.PhoneService phoneService;
     private final MobileApplicationService mobileApplicationService;
 
     @Override

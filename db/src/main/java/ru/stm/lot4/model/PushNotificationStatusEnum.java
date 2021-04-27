@@ -1,4 +1,4 @@
-package ru.stm.lo4.model;
+package ru.stm.lot4.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
