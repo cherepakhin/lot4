@@ -9,6 +9,8 @@
 - [Отправка в FCM](sender-app/Readme.md)
 - [Получение статистики](statistic-app/Readme.md)
 
+![Схема](doc/diag.png)
+
 ### Сборка
 
 ````
