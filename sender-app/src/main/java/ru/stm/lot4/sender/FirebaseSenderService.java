@@ -3,9 +3,7 @@ package ru.stm.lot4.sender;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import ru.stm.lot4.dto.PushNotificationDto;
 import ru.stm.lot4.sender.firebasemessage.FireBaseMessage;
@@ -16,16 +14,20 @@ import java.util.concurrent.ExecutorService;
 @Slf4j
 public class FirebaseSenderService {
 
-    private static final String FIREBASE_API_URL = "https://fcm.googleapis.com/fcm/send";
+    private final String urlFCM;
     String fcmServiceAccountKey;
     ObjectMapper mapper = new ObjectMapper();
     ExecutorService executors;
     RestTemplate restTemplate = new RestTemplate();
+    private IFirebaseChecker checker;
 
 
-    public FirebaseSenderService(String fcmServiceAccountKey, ExecutorService executors) {
+    public FirebaseSenderService(String fcmServiceAccountKey,
+                                 ExecutorService executors,
+                                 String urlFCM) {
         this.fcmServiceAccountKey = fcmServiceAccountKey;
-        this.executors=executors;
+        this.executors = executors;
+        this.urlFCM = urlFCM;
     }
 
     @SneakyThrows
@@ -39,9 +41,15 @@ public class FirebaseSenderService {
         headers.add("Authorization", "key=" + fcmServiceAccountKey);
         HttpEntity<String> request =
                 new HttpEntity<>(getBody(dto), headers);
-        log.info(request.toString());
-        String response = getRestTemplate().postForObject(FIREBASE_API_URL, request, String.class);
-        log.info(response);
+        try {
+            ResponseEntity<String> response = getRestTemplate().postForEntity(urlFCM, request, String.class);
+            if (response.getStatusCode() != HttpStatus.OK) {
+                pause(response.toString());
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            pause(e.getMessage());
+        }
     }
 
     public RestTemplate getRestTemplate() {
@@ -51,5 +59,15 @@ public class FirebaseSenderService {
     @SneakyThrows
     String getBody(PushNotificationDto dto) {
         return mapper.writeValueAsString(new FireBaseMessage(dto));
+    }
+
+    public void setFirebaseChecker(IFirebaseChecker checker) {
+        this.checker = checker;
+    }
+
+    void pause(String cause) {
+        if (checker != null) {
+            checker.pause(cause);
+        }
     }
 }

@@ -6,7 +6,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.support.serializer.DeserializationException;
 
 @Slf4j
-public class KafkaErrorHandler implements org.springframework.kafka.listener.ErrorHandler{
+public class KafkaErrorHandler implements org.springframework.kafka.listener.ErrorHandler {
 
     @Override
     public void handle(Exception e, ConsumerRecord<?, ?> consumerRecord) {

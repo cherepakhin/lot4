@@ -19,8 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 
@@ -38,7 +37,7 @@ class FirebaseSenderServiceTest {
 
     @Test
     void getBody() throws JsonProcessingException {
-        FirebaseSenderService service = new FirebaseSenderService("SERVER_KEY", executors);
+        FirebaseSenderService service = new FirebaseSenderService("SERVER_KEY", executors,"");
         PushNotificationDto dto = new PushNotificationDto();
         dto.setTitle("TITLE");
         dto.setBody("BODY");
@@ -61,7 +60,7 @@ class FirebaseSenderServiceTest {
     @Test
     void sendToFirebase() throws URISyntaxException {
         FirebaseSenderService service =
-                new FirebaseSenderService("FCM_SERVICE_ACCOUNT_KEY", executors);
+                new FirebaseSenderService("FCM_SERVICE_ACCOUNT_KEY", executors,"https://fcm.googleapis.com/fcm/send");
         FirebaseSenderService spyService = spy(service);
         when(spyService.getRestTemplate()).thenReturn(restTemplate);
 
@@ -88,5 +87,22 @@ class FirebaseSenderServiceTest {
         mockServer.verify();
     }
 
+    @Test
+    void pauseOnError() {
+        FirebaseChecker firebaseChecker = mock(FirebaseChecker.class);
+        FirebaseSenderService service =
+                new FirebaseSenderService("FCM_SERVICE_ACCOUNT_KEY",
+                        executors,
+                        "http://FAKE_URL");
+        service.setFirebaseChecker(firebaseChecker);
+        PushNotificationDto dto = new PushNotificationDto();
+        dto.setTitle("TITLE");
+        dto.setBody("BODY");
 
+        PhoneDto phoneDto1 = new PhoneDto();
+        phoneDto1.setToken("TOKEN1");
+        dto.getPhones().add(phoneDto1);
+        service.send(dto);
+        verify(firebaseChecker, times(1)).pause(anyString());
+    }
 }
