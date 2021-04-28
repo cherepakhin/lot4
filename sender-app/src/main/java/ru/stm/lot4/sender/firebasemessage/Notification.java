@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Notification {
-    String title="";
-    String body="";
+    String title = "";
+    String body = "";
 }

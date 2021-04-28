@@ -6,3 +6,22 @@ kafka:
 fcm:
   service-account-key: ${SERVICE_ACCOUNT_KEY:""}
   count-thread: ${COUNT_THREAD:100}
+  health_timeout: ${FCM_HEALTH_TIMEOUT_MS:5000}
+
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
