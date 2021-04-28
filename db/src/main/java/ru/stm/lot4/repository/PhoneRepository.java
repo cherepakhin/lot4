@@ -13,4 +13,5 @@ public interface PhoneRepository extends JpaRepository<PhoneEntity, Long> {
     @Modifying
     @Query("UPDATE PhoneEntity as p set p.isActive = false where p.token = :token")
     Integer deleteByToken(String token);
+    PhoneEntity findByNumber(String number);
 }

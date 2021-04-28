@@ -52,7 +52,7 @@ public class PushNotificationKafkaSenderServiceTest {
                 .setNumber("+79999999999");
         PushNotificationDto pushNotificationDto = new PushNotificationDto()
                 .setBody("body")
-                .setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .setDate(new Date())
                 .setPhones(Collections.singleton(phoneDto))
                 .setTitle("title");
         pushNotificationSenderService.send(pushNotificationDto, null);

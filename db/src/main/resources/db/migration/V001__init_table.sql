@@ -8,8 +8,7 @@ CREATE TABLE if not exists push_notification (
 	"title"         varchar(255)    not null,
     "body"          text            not null,
     "date"          timestamp       not null,
-    "status"        int                       DEFAULT 0,
-    "phone_id"      serial          not null
+    "status"        int                       DEFAULT 0
 );
 
 CREATE TABLE if not exists phone (
@@ -20,6 +19,13 @@ CREATE TABLE if not exists phone (
     "is_active"     boolean     not null DEFAULT true
 );
 
+CREATE TABLE if not exists push_notification_phone (
+    "push_notification_id"  serial  not null,
+    "phone_id"  serial  not null
+);
+
 ALTER TABLE phone ADD FOREIGN KEY (app_id) REFERENCES mobile_application (id);
 
-ALTER TABLE push_notification ADD FOREIGN KEY (phone_id) REFERENCES public.Phone (id);
+ALTER TABLE push_notification_phone ADD FOREIGN KEY (push_notification_id) REFERENCES push_notification (id);
+
+ALTER TABLE push_notification_phone ADD FOREIGN KEY (phone_id) REFERENCES phone (id);

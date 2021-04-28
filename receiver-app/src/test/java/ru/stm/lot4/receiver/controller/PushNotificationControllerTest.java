@@ -22,6 +22,7 @@ import ru.stm.lot4.model.PhoneEntity;
 import ru.stm.lot4.model.PushNotificationEntity;
 import ru.stm.lot4.receiver.Application;
 import ru.stm.lot4.receiver.controller.PushNotificationController;
+import ru.stm.lot4.receiver.dto.PushNotificationRequest;
 import ru.stm.lot4.receiver.mapper.PushNotificationMapper;
 import ru.stm.lot4.receiver.service.PushNotificationService;
 
@@ -34,6 +35,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -56,16 +58,10 @@ public class PushNotificationControllerTest {
 
     @Test
     void test_create_method() throws Exception {
-        MobileApplicationDto mobileApplicationDto = new MobileApplicationDto()
-                .setVersion("1.0");
-        PhoneDto phoneDto = new PhoneDto()
-                .setToken("token")
-                .setApp(mobileApplicationDto)
-                .setNumber("+79999999999");
-        PushNotificationDto pushNotificationDto = new PushNotificationDto()
+        PushNotificationRequest pushNotificationDto = new PushNotificationRequest()
                 .setBody("body")
-                .setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                .setPhones(Collections.singleton(phoneDto))
+                .setDate(new Date())
+                .setPhones(Collections.singleton("+79999999999"))
                 .setTitle("title");
         mockMvc.perform(MockMvcRequestBuilders.post(ROOT_PATH + "create")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -84,7 +80,7 @@ public class PushNotificationControllerTest {
         phoneDto.setNumber("+79999999999");
         PushNotificationEntity pushNotification = new PushNotificationEntity();
         pushNotification.setBody("body");
-        pushNotification.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        pushNotification.setDate(new Date());
         pushNotification.setPhones(Collections.singleton(phoneDto));
         pushNotification.setTitle("title");
         List<PushNotificationEntity> pushNotificationEntities = Collections.singletonList(pushNotification);
