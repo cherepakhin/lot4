@@ -16,64 +16,21 @@ services:
       JMX_PORT: '1099'
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: admin
-    ports:
-      - '5432:5432'
-    volumes:
-      - './init.sql:/docker-entrypoint-initdb.d/init.sql'
-  device-app:
-    image: 'device-app:latest'
-    environment:
-      PG_URL: jdbc:postgresql://db:5432/db
-      PG_USER: postgres
-      PG_PASSWORD: admin
-    ports:
-      - '8081:8080'
-    links:
-      - db
-      - graylog
-
-  receiver-app:
-    image: 'receiver-app:latest'
-    environment:
-      PG_URL: jdbc:postgresql://db:5432/db
-      PG_USER: postgres
-      PG_PASSWORD: admin
-      KAFKA_HOST: kafka:9092
-      KAFKA_TOPIC: lot4-messages
-    ports:
-      - '8082:8080'
-    links:
-      - db
-      - kafka
-      - graylog
-
   sender-app:
     image: 'sender-app:latest'
     environment:
       KAFKA_HOST: kafka:9092
       KAFKA_TOPIC: lot4-messages
+      GRAYLOG_HOST: graylog
+      GRAYLOG_PORT: '12201'
     ports:
       - '8083:8080'
-    links:
+    depends_on:
       - kafka
       - graylog
 
-  statistic-app:
-    image: 'statistic-app:latest'
-    environment:
-      PG_URL: jdbc:postgresql://db:5432/db
-      PG_USER: postgres
-      PG_PASSWORD: admin
-    ports:
-      - '8084:8080'
-    links:
-      - db
-      - graylog
+  mongodb:
+    image: mongo:3
 
   elasticsearch:
     hostname: elasticsearch
@@ -98,6 +55,7 @@ services:
     environment:
       - GRAYLOG_HTTP_EXTERNAL_URI=http://0.0.0.0:9999/
       - GRAYLOG_WEB_ENDPOINT_URI=http://0.0.0.0:9000/
+      #- GRAYLOG_HTTP_EXTERNAL_URI=http://0.0.0.0:9000/
     links:
       - mongodb:mongo
       - elasticsearch
