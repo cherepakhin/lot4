@@ -21,6 +21,8 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: admin
+      GRAYLOG_HOST: graylog
+      GRAYLOG_PORT: '12201'
     ports:
       - '5432:5432'
     volumes:
@@ -31,10 +33,14 @@ services:
       PG_URL: jdbc:postgresql://db:5432/db
       PG_USER: postgres
       PG_PASSWORD: admin
+      GRAYLOG_HOST: graylog
+      GRAYLOG_PORT: '12201'
     ports:
       - '8081:8080'
     links:
       - db
+      - graylog
+
   receiver-app:
     image: 'receiver-app:latest'
     environment:
@@ -43,27 +49,74 @@ services:
       PG_PASSWORD: admin
       KAFKA_HOST: kafka:9092
       KAFKA_TOPIC: lot4-messages
+      GRAYLOG_HOST: graylog
+      GRAYLOG_PORT: '12201'
     ports:
       - '8082:8080'
     links:
       - db
       - kafka
+      - graylog
+
   sender-app:
     image: 'sender-app:latest'
     environment:
       KAFKA_HOST: kafka:9092
       KAFKA_TOPIC: lot4-messages
+      GRAYLOG_HOST: graylog
+      GRAYLOG_PORT: '12201'
     ports:
       - '8083:8080'
     links:
       - kafka
+      - graylog
+
   statistic-app:
     image: 'statistic-app:latest'
     environment:
       PG_URL: jdbc:postgresql://db:5432/db
       PG_USER: postgres
       PG_PASSWORD: admin
+      GRAYLOG_HOST: graylog
+      GRAYLOG_PORT: '12201'
     ports:
       - '8084:8080'
     links:
       - db
+      - graylog
+
+  elasticsearch:
+    hostname: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.2
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=localhost
+      - network.host=0.0.0.0
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
+    links:
+      - mongodb
+
+  graylog:
+    hostname: graylog
+    image: graylog/graylog:3.1
+    environment:
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://0.0.0.0:9999/
+      - GRAYLOG_WEB_ENDPOINT_URI=http://0.0.0.0:9000/
+    links:
+      - mongodb:mongo
+      - elasticsearch
+    depends_on:
+      - mongodb
+      - elasticsearch
+    ports:
+      - 9999:9000
+      - 514:514
+      - 514:514/udp
+      - 12201:12201
+      - 12201:12201/udp

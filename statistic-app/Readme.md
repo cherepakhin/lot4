@@ -15,3 +15,7 @@
 Метрики доступны на GET /actuator и для Prometheus на GET /actuator/prometheus
 
 Swagger достуен на GET /v2/api-docs
+
+#### Logger
+
+Logger реализован на GrayLog. Протокол обмена GELF UDP. Должны быть установлены переменные окружения GRAYLOG_HOST и GRAYLOG_PORT

@@ -13,3 +13,7 @@
 | FCM_HEALTH_TIMEOUT_MS |5000 | Период проверки статуса в мс Firebase Cloud Message (сетевые проблемы и т.п.) |
  
 Метрики доступны на GET /actuator и для Prometheus на GET /actuator/prometheus
+
+#### Logger
+
+Logger реализован на GrayLog. Протокол обмена GELF UDP. Должны быть установлены переменные окружения GRAYLOG_HOST и GRAYLOG_PORT
