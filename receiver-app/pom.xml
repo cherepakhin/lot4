@@ -101,6 +101,7 @@
                 <configuration>
                     <imageName>${project.artifactId}</imageName>
                     <baseImage>openjdk:8-jdk-alpine</baseImage>
+                    <forceTags>true</forceTags>
                     <imageTags>
                         <imageTag>${project.version}</imageTag>
                         <imageTag>latest</imageTag>

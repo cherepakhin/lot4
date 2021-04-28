@@ -26,6 +26,7 @@
         <module>receiver-app</module>
 		<module>device-app</module>
 		<module>statistic-app</module>
+		<module>front-app</module>
     </modules>
 	<dependencies>
 		<dependency>
