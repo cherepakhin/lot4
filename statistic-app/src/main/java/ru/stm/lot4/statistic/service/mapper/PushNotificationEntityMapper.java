@@ -7,7 +7,6 @@ import org.mapstruct.ReportingPolicy;
 import ru.stm.lot4.model.PushNotificationEntity;
 import ru.stm.lot4.statistic.dto.MessageDto;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
