@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(StatisticController.class)
-public class StatisticServiceControllerTest {
+class StatisticServiceControllerTest {
     private final static String STATISTIC_APP_ENDPOINT = "/statistic/application";
     private final static String STATISTIC_MESSAGES_ENDPOINT = "/statistic/messages";
     @Autowired

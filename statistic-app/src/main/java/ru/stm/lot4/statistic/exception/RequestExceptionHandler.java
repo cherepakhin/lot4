@@ -26,6 +26,6 @@ public class RequestExceptionHandler extends ResponseEntityExceptionHandler {
                         constraintViolation.getMessage()));
         validationError.setMessage(ex.getMessage());
         validationError.setStatus(HttpStatus.BAD_REQUEST);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationError);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)/**/.body(validationError);
     }
 }

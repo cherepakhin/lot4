@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
-public class StatisticServiceTest {
+class StatisticServiceTest {
     StatisticService statisticService;
     MobileApplicationRepository applicationRepository = mock(MobileApplicationRepository.class);
     PushNotificationEntityMapper notificationEntityMapper = mock(PushNotificationEntityMapper.class);
