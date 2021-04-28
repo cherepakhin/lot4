@@ -12,7 +12,7 @@
 ### Сборка
 
 ````
-mvn clean install
+mvn clean package
 ````
 
 ### Тестовое развертывание
