@@ -6,16 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.time.ZonedDateTime;
-import java.util.Date;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class MessageDto {
-    private String title;
-    private String message;
-    private ZonedDateTime time;
+public class StatisticDto {
+    private String version;
+    private Long registrationsCount;
+    private Long phoneNumbersCount;
 }

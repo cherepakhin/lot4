@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.stm.lot4.model.MobileApplicationStatisticEntity;
 import ru.stm.lot4.statistic.dto.MessageDto;
+import ru.stm.lot4.statistic.dto.StatisticDto;
 import ru.stm.lot4.statistic.service.StatisticService;
 
 import javax.validation.constraints.NotBlank;
@@ -23,7 +23,7 @@ import java.util.List;
 @Validated
 public class StatisticController {
 
-    private static final String PHONE_REGEX = "^\\+?(\\d[\\d-. ]+)?(\\([\\d-. ]+\\))?[\\d-. ]+\\d$";
+    private static final String PHONE_REGEX = "^((\\+7|7|8|)+([0-9]){10})$";
 
     private final StatisticService statisticService;
 
@@ -32,7 +32,7 @@ public class StatisticController {
     }
 
     @GetMapping("/application")
-    public ResponseEntity<List<MobileApplicationStatisticEntity>> getApplicationsStatistic() {
+    public ResponseEntity<List<StatisticDto>> getApplicationsStatistic() {
         return ResponseEntity.ok(statisticService.getApplicationStat());
     }
 

@@ -8,10 +8,11 @@ package ru.stm.lot4.statistic.service;
 import org.springframework.data.domain.Pageable;
 import ru.stm.lot4.model.MobileApplicationStatisticEntity;
 import ru.stm.lot4.statistic.dto.MessageDto;
+import ru.stm.lot4.statistic.dto.StatisticDto;
 
 import java.util.List;
 
 public interface StatisticService {
-    List<MobileApplicationStatisticEntity> getApplicationStat();
+    List<StatisticDto> getApplicationStat();
     List<MessageDto> getMessagesByPhone(String phone, Pageable page);
 }
