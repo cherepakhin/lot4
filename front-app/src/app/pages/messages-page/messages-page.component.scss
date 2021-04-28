@@ -1,0 +1,46 @@
+@import "src/assets/css/common-variables";
+.search-panel {
+  display: flex;
+  align-items: center;
+
+  &__btn {
+    margin-left: 15px;
+  }
+
+  .mat-form-field {
+    width: 250px;
+  }
+}
+
+.message-item {
+  border: 1px solid #949494;
+  border-radius: 5px;
+  padding: $padding-lg;
+  margin-bottom: 20px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    .title {
+      font-weight: bold;
+      font-size: size(12);
+      color: $text-primary-color;
+    }
+
+    .time {
+      font-size: size(12);
+      color: $text-hint-color;
+      display: flex;
+      align-items: center;
+
+      .mat-icon {
+        font-size: size(14);
+        height: size(14);
+        width: size(14);
+        margin-right: 5px;
+      }
+    }
+  }
+}

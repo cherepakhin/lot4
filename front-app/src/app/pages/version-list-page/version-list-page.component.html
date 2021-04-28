@@ -1,0 +1,14 @@
+<div class="page-title">
+  <h1>Mobile app versions</h1>
+</div>
+<div class="page-content">
+  <div class="spinner-area" *ngIf="isLoading">
+    <mat-spinner diameter="30"></mat-spinner>
+  </div>
+  <div class="error" *ngIf="isLoadingError">An error occurred while loading data</div>
+  <app-table
+    *ngIf="isDataLoaded"
+    [tableData] = "tableData"
+    [columns] = "columns"
+  ></app-table>
+</div>

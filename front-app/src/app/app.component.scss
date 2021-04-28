@@ -1,0 +1,37 @@
+@import '/src/assets/css/common-variables.scss';
+
+.header {
+  padding: $padding-md;
+  background-color: $bg-primary-color;
+
+  &__body-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__home a{
+    color: $text-secondary-color;
+  }
+  &__navigation {
+    display: flex;
+    .navigation-item{
+      padding: $padding-xs;
+      a {
+        text-decoration: none;
+        color: $text-secondary-color;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      .link-active {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.container {
+  max-width: $container-max-width;
+  margin: auto;
+  padding: $padding-md;
+}

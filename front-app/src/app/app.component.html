@@ -1,0 +1,23 @@
+<div class="header">
+  <div class="container">
+    <div class="header__body-inner">
+      <div class="header__home">
+        <a [routerLink]="['/']">
+          <mat-icon>home</mat-icon>
+        </a>
+      </div>
+      <div class="header__navigation">
+        <div class="navigation-item">
+          <a [routerLink]="['/']" routerLinkActive="link-active" [routerLinkActiveOptions]="{exact:true}">Mobile app versions</a>
+        </div>
+        <div class="navigation-item">
+          <a [routerLink]="['/messages']" routerLinkActive="link-active">Messages</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
