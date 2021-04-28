@@ -2,12 +2,15 @@ package ru.stm.lot4.receiver.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Pageable;
 import ru.stm.lot4.model.MobileApplicationEntity;
 import ru.stm.lot4.model.PhoneEntity;
 import ru.stm.lot4.model.PushNotificationEntity;
 import ru.stm.lot4.model.PushNotificationStatusEnum;
+import ru.stm.lot4.receiver.mapper.PushNotificationMapper;
 import ru.stm.lot4.receiver.service.impl.PushNotificationServiceImpl;
+import ru.stm.lot4.repository.PhoneRepository;
 import ru.stm.lot4.repository.PushNotificationRepository;
 
 import java.time.LocalDate;
@@ -26,10 +29,12 @@ public class PushNotificationServiceTest {
     private PushNotificationService pushNotificationService;
 
     private PushNotificationRepository pushNotificationRepository = mock(PushNotificationRepository.class);
+    private PhoneRepository phoneRepository = mock(PhoneRepository.class);
+    private PushNotificationMapper mapper = Mappers.getMapper(PushNotificationMapper.class);
 
     @BeforeEach
     void initService() {
-        pushNotificationService = new PushNotificationServiceImpl(pushNotificationRepository);
+        pushNotificationService = new PushNotificationServiceImpl(pushNotificationRepository, phoneRepository, mapper);
     }
 
     @Test
@@ -42,7 +47,7 @@ public class PushNotificationServiceTest {
         phoneDto.setNumber("+79999999999");
         PushNotificationEntity pushNotification = new PushNotificationEntity();
         pushNotification.setBody("body");
-        pushNotification.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        pushNotification.setDate(new Date());
         pushNotification.setPhones(Collections.singleton(phoneDto));
         pushNotification.setTitle("title");
         pushNotificationService.save(pushNotification);
@@ -60,7 +65,7 @@ public class PushNotificationServiceTest {
         phoneDto.setNumber("+79999999999");
         PushNotificationEntity pushNotification = new PushNotificationEntity();
         pushNotification.setBody("body");
-        pushNotification.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        pushNotification.setDate(new Date());
         pushNotification.setPhones(Collections.singleton(phoneDto));
         pushNotification.setTitle("title");
         List<PushNotificationEntity> pushNotificationEntityList = Collections.singletonList(pushNotification);
@@ -80,15 +85,15 @@ public class PushNotificationServiceTest {
     void test_receive_available() {
         pushNotificationService.receiveActualAvailablePushNotification();
         verify(pushNotificationRepository, times(1))
-                .findAllByDateAndStatus(any(), eq(PushNotificationStatusEnum.AVAILABLE));
+                .findAllByDateBeforeAndStatus(any(), eq(PushNotificationStatusEnum.AVAILABLE));
     }
 
     @Test
     void test_find_all_by_date_and_status() {
-        Date date = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        pushNotificationService.findAllByDateAndStatus(date, PushNotificationStatusEnum.AVAILABLE);
+        Date date = new Date();
+        pushNotificationService.findAllByDateBeforeAndStatus(date, PushNotificationStatusEnum.AVAILABLE);
         verify(pushNotificationRepository, times(1))
-                .findAllByDateAndStatus(date, PushNotificationStatusEnum.AVAILABLE);
+                .findAllByDateBeforeAndStatus(date, PushNotificationStatusEnum.AVAILABLE);
     }
 
 

@@ -1,4 +1,4 @@
-package ru.stm.lot4.dto;
+package ru.stm.lot4.receiver.dto;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -8,9 +8,13 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
+import ru.stm.lot4.dto.PhoneDto;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -19,11 +23,12 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PhoneDto {
-    Long id;
-    @Pattern(regexp = "^((\\+7|7|8|)+([0-9]){10})$", message = "Номер не корректен")
-    String number;
-    @NotBlank(message = "Токен не должен быть пустым!")
-    String token;
-    MobileApplicationDto app;
+public class PushNotificationRequest {
+    @NotBlank
+    String title;
+    @NotBlank
+    String body;
+    Set<String> phones = new HashSet<>();
+    @NotNull
+    Date date;
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFutureCallback;
+import ru.stm.lot4.dto.MobileApplicationDto;
+import ru.stm.lot4.dto.PhoneDto;
 import ru.stm.lot4.dto.PushNotificationDto;
 import ru.stm.lot4.model.PushNotificationEntity;
 import ru.stm.lot4.model.PushNotificationStatusEnum;
@@ -16,8 +18,11 @@ import ru.stm.lot4.receiver.service.PushNotificationService;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -48,7 +53,6 @@ public class PushNotificationSchedulerServiceImpl implements PushNotificationSch
         log.info("receive available pushNotification. Size: {}", pushNotificationList.size());
         pushNotificationList.forEach(this::sendToKafka);
     }
-
 
     private void sendToKafka(PushNotificationEntity pushNotificationEntity) {
         try {
