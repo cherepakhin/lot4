@@ -8,6 +8,7 @@
 - [Приемник событий](receiver-app/Readme.md)
 - [Отправка в FCM](sender-app/Readme.md)
 - [Получение статистики](statistic-app/Readme.md)
+- [Web-интерфейс](front-app/README.md)
 
 ![Схема](doc/diag.png)
 
