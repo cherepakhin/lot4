@@ -16,7 +16,8 @@ CREATE TABLE if not exists phone (
 	"id"            serial      not null UNIQUE,
 	"token"         text        not null,
 	"number"        varchar(20) not null,
-    "app_id"        serial      not null
+    "app_id"        serial      not null,
+    "is_active"     boolean     not null DEFAULT true
 );
 
 ALTER TABLE phone ADD FOREIGN KEY (app_id) REFERENCES mobile_application (id);
