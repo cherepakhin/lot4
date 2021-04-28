@@ -1,2 +1,3 @@
 mvn clean package
-docker-compose run
+cd ./front-app/ && docker build -t front-app . && cd ..
+docker-compose up -d

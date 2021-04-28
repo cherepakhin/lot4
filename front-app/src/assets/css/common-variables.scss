@@ -1,0 +1,23 @@
+$font-family-sans-serif: Roboto, "Helvetica Neue", sans-serif;;
+$font-family-base: $font-family-sans-serif;
+$font-size-small: 12px;
+$font-size-base: 14px;
+
+$bg-primary-color: #3f51b5;
+$bg-secondary-color: #f5f5f5;
+
+$text-primary-color: #202020;
+$text-secondary-color: #fff;
+$text-hint-color: #bababa;
+
+$padding-xs: 5px;
+$padding-sm: 10px;
+$padding-md: 15px;
+$padding-lg: 20px;
+$padding-xl: 25px;
+
+$container-max-width: 1100px;
+
+@function size($value) {
+  @return $value+px;
+}

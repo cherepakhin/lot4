@@ -1,0 +1,53 @@
+<div class="page-title">
+  <h1>Messages</h1>
+</div>
+<div class="page-content">
+  <div class="search-panel">
+    <mat-form-field>
+    <mat-label>Phone number</mat-label>
+    <input
+       type="text"
+       matInput
+       [formControl]="phoneFormControl"
+       [errorStateMatcher]="matcher"
+       (keypress)="handleEnterPress($event)"
+    >
+    <mat-error *ngIf="!phoneFormControl.hasError('required')">
+      Please enter a valid phone number
+    </mat-error>
+    <mat-error *ngIf="phoneFormControl.hasError('required')">
+      This field is <strong>required</strong>
+    </mat-error>
+    </mat-form-field>
+    <button
+      mat-flat-button
+      color="primary"
+      class="search-panel__btn"
+      (click)="getMessages()"
+    >
+      Get messages
+    </button>
+  </div>
+  <div class="spinner-area" *ngIf="isLoading">
+    <mat-spinner diameter="30"></mat-spinner>
+  </div>
+  <div class="error" *ngIf="isLoadingError">An error occurred while loading data</div>
+  <div class="messages-wrapper" *ngIf="isDataLoaded">
+    <ng-container
+      *ngFor="let message of messages"
+    >
+      <div class="message-item">
+        <div class="message-item__header">
+          <div class="title">
+            {{ message.title }}
+          </div>
+          <div class="time">
+            <mat-icon>access_time</mat-icon>
+            {{ message.time * 1000 | date:'dd-MM-YYYY  H:mm'}}
+          </div>
+        </div>
+        {{ message.message }}
+      </div>
+    </ng-container>
+  </div>
+</div>
