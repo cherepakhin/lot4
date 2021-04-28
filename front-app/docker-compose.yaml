@@ -1,6 +1,6 @@
 version: '2'
 services:
-  zookeeper:
+  front-app:
     image: front
     ports:
       - '4200:4200'
