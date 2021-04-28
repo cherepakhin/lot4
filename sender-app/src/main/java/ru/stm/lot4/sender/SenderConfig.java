@@ -13,6 +13,7 @@ import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import ru.stm.lot4.dto.PushNotificationDto;
 
 import java.util.HashMap;
@@ -21,8 +22,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Configuration
+@EnableScheduling
 @EnableKafka
 public class SenderConfig {
+    private static final String FIREBASE_API_URL = "https://fcm.googleapis.com/fcm/send";
+
     @Value("${kafka.host}")
     private String kafkaHost;
     @Value("${kafka.namegroup}")
@@ -80,7 +84,7 @@ public class SenderConfig {
     @Bean
     FirebaseSenderService firebaseSenderService() {
         ExecutorService executors = Executors.newFixedThreadPool(fcmCountThread);
-        return new FirebaseSenderService(fcmServiceAccountKey, executors);
+        return new FirebaseSenderService(fcmServiceAccountKey, executors, FIREBASE_API_URL);
     }
 
     /**
@@ -99,5 +103,13 @@ public class SenderConfig {
                 new KafkaMessageListenerContainer<>(consumerFactory, containerProps);
         container.setErrorHandler(kafkaErrorHandler);
         return container;
+    }
+
+    @Bean
+    IFirebaseChecker firebaseChecker(KafkaMessageListenerContainer<String, PushNotificationDto>
+                                             firebaseConsumerContainer, FirebaseSenderService firebaseSenderService) {
+        FirebaseChecker checker = new FirebaseChecker(firebaseConsumerContainer, FIREBASE_API_URL);
+        firebaseSenderService.setFirebaseChecker(checker);
+        return checker;
     }
 }
