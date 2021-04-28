@@ -39,6 +39,7 @@ public class DeviceServiceImpl implements DeviceService {
         phoneEntity.setNumber(number);
         phoneEntity.setApp(mobileApplication);
         phoneEntity.setToken(token);
+        phoneEntity.setIsActive(true);
         return phoneService.save(phoneEntity);
     }
 

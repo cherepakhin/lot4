@@ -14,7 +14,7 @@ public final class QueryConstants {
             "left join phone pn " +
             "on pn.app_id = amp.id " +
             "group by amp.version) x group by x.ver) x " +
-            "on x.ver = ap.version " +
+            "on x.ver = ap.version where p.is_active = true " +
             "group by ap.version";
     public static final String SELECT_APPLICATION_STATISTIC_2 =
             "select new ru.stm.lo4.model.MobileApplicationStatisticEntity(" +

@@ -26,4 +26,6 @@ public class PhoneEntity {
     String token;
     @ManyToOne
     MobileApplicationEntity app;
+    @Column(name = "is_active")
+    Boolean isActive;
 }
