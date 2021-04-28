@@ -1,0 +1,28 @@
+@import "src/assets/css/common-variables";
+
+.mat-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  .mat-cell {
+    padding-left: $padding-sm;
+    padding-right: $padding-sm;
+    text-align: center;
+    border: 1px solid;
+  }
+
+  .mat-header-cell {
+    padding-left: $padding-sm;
+    padding-right: $padding-sm;
+    text-align: center;
+    font-weight: bold;
+    font-size: size(16);
+    background-color: $bg-secondary-color;
+    border: 1px solid;
+    color: $text-primary-color;
+  }
+
+  ::ng-deep .mat-sort-header-container {
+    justify-content: center;
+  }
+}

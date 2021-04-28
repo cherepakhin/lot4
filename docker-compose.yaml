@@ -67,3 +67,9 @@ services:
       - '8084:8080'
     links:
       - db
+  front-app:
+    image: 'front-app:latest'
+    ports:
+      - '4200:4200'
+    links:
+      - statistic-app
