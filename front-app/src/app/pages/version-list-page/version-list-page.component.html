@@ -5,7 +5,7 @@
   <div class="spinner-area" *ngIf="isLoading">
     <mat-spinner diameter="30"></mat-spinner>
   </div>
-  <div class="error" *ngIf="isLoadingError">An error occurred while loading data</div>
+  <div class="error" *ngIf="errorText">{{ errorText }}</div>
   <app-table
     *ngIf="isDataLoaded"
     [tableData] = "tableData"

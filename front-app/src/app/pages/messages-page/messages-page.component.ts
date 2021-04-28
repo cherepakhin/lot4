@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { ApiService } from '../../services/api.service';
+import {Component} from '@angular/core';
+import {ApiService} from '../../services/api.service';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {Message} from '../../interfaces/message.interface';
+import {ErrorsEnum} from '../../enums/errors.enum';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -17,10 +18,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./messages-page.component.scss']
 })
 export class MessagesPageComponent{
-  isLoadingError = false;
   isLoading = false;
   isDataLoaded = false;
 
+  errorText: string;
   messages: Array<Message> = [];
 
   phoneFormControl = new FormControl('', [
@@ -41,15 +42,18 @@ export class MessagesPageComponent{
   getMessages(): void {
     if (this.phoneFormControl.status === 'VALID') {
       this.isLoading = true;
+      this.errorText = null;
       this.apiService.getMessages(this.phoneFormControl.value).subscribe(
         (res: Array<Message>) => {
           this.messages = res;
-
+          if (this.messages && this.messages.length > 0) {
+            this.errorText = ErrorsEnum.NO_MESSAGES_ERROR;
+          }
           this.isDataLoaded = true;
           this.isLoading = false;
         },
         () => {
-          this.isLoadingError = true;
+          this.errorText = ErrorsEnum.LOADING_ERROR;
           this.isLoading = false;
         });
     }
