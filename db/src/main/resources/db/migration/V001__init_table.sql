@@ -20,8 +20,8 @@ CREATE TABLE if not exists phone (
 );
 
 CREATE TABLE if not exists push_notification_phone (
-    "push_notification_id"  serial  not null,
-    "phone_id"  serial  not null
+    "push_notification_id"  int  not null,
+    "phone_id"  int  not null
 );
 
 ALTER TABLE phone ADD FOREIGN KEY (app_id) REFERENCES mobile_application (id);

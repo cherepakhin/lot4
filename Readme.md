@@ -15,7 +15,7 @@
 ### Сборка
 
 ````
-mvn clean package
+mvn clean package -DforkCount=0
 ````
 
 ### Тестовое развертывание

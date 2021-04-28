@@ -15,9 +15,8 @@
         <artifactId>dockerfile-maven-plugin</artifactId>
         <version>1.4.13</version>
         <configuration>
-          <finalName>${project.artifactId}</finalName>
+          <repository>${project.artifactId}</repository>
           <tag>${project.version}</tag>
-          <tag>latest</tag>
         </configuration>
         <executions>
           <execution>
@@ -29,6 +28,7 @@
           </execution>
         </executions>
       </plugin>
+
     </plugins>
   </build>
 

@@ -31,8 +31,7 @@ public final class QueryConstants {
                     "group by amp.version) x group by x.ver) x " +
                     "on x.ver = ap.version " +
                     "group by ap.version";
-    public static final String SELECT_RECEIVED_MESSAGES_BY_PHONE = "select pn.* from push_notification pn " +
-            "left join phone p " +
-            "on pn.phone_id = p.id " +
-            "where p.number = :phone and pn.status = :status";
+    public static final String SELECT_RECEIVED_MESSAGES_BY_PHONE = "select pn.* from push_notification as pn " +
+            " left join push_notification_phone as pnp on pnp.push_notification_id = pn.id " +
+            " left join phone as p on pnp.phone_id = p.id where p.number = :phone and pn.status = :status";
 }
