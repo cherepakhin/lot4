@@ -15,13 +15,12 @@ import ru.stm.lot4.repository.PhoneRepository;
 import ru.stm.lot4.repository.PushNotificationRepository;
 import ru.stm.lot4.receiver.service.PushNotificationService;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.Collection;
 
 @RequiredArgsConstructor
 @Service
@@ -44,6 +43,7 @@ public class PushNotificationServiceImpl implements PushNotificationService {
         Set<PhoneEntity> phones = pushNotificationRequest.getPhones()
                 .stream()
                 .map(phoneRepository::findByNumber)
+                .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
         if(phones.isEmpty()) {

@@ -1,3 +1,2 @@
-mvn clean package
-cd ./front-app/ && docker build -t front-app . && cd ..
+mvn clean package -DforkCount=0
 docker-compose up -d

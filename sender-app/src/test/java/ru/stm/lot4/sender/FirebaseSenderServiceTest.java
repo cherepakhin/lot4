@@ -53,7 +53,7 @@ class FirebaseSenderServiceTest {
         System.out.println(mapper.writeValueAsString(dto));
         String jsonDto = service.getBody(dto);
         System.out.println(jsonDto);
-        assertEquals("{\"notification\":{\"title\":\"TITLE\",\"body\":\"BODY\"},\"data\":\"\",\"priority\":\"high\",\"direct_boot_ok\":true,\"registration_ids\":[\"TOKEN2\",\"TOKEN1\"]}",
+        assertEquals("{\"notification\":{\"title\":\"TITLE\",\"body\":\"BODY\"},\"data\":\"\",\"priority\":\"high\",\"direct_boot_ok\":true,\"registration_ids\":[\"TOKEN1\",\"TOKEN2\"]}",
                 jsonDto);
     }
 

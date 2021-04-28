@@ -16,7 +16,6 @@ import ru.stm.lot4.receiver.dto.PushNotificationRequest;
 public interface PushNotificationMapper {
 
     @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy hh:mm:ss")
-    @Mapping(source = "id", target = "id", ignore = true)
     PushNotificationDto toDTO(PushNotificationEntity entity);
 
     @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy hh:mm:ss")
