@@ -1,3 +1,4 @@
+#Web-API для вызова из мобильных приложений
 
 ### Переменные окружения
 | Название|Значение по умолчанию|Описание|
@@ -8,4 +9,5 @@
 
 ### Метрики
 
-Метрики доступны на GET /actuator и для Prometheus на GET /actuator/prometheus
+Метрики доступны на GET **/actuator** и для Prometheus на GET **/actuator/prometheus**
+Описание API доступно на GET **/swagger-ui/**
