@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.stm.lot4.device.app.dto.DeviceDeleteRequest;
 import ru.stm.lot4.device.app.dto.DeviceRegistryRequest;
@@ -32,6 +33,8 @@ class DeviceControllerTest {
     private EntityManagerFactory entityManagerFactory;
 
     ObjectMapper objectMapper = new ObjectMapper();
+    
+    private final String DEVICE_REST_PATH = "/device";
 
     @Test
     void emptyFirebaseTokenCaseRegistryDevice() throws Exception {
@@ -40,8 +43,8 @@ class DeviceControllerTest {
         deviceRegistryRequest.setVersion("ver 0.1");
         deviceRegistryRequest.setNumber("89999999999");
 
-        this.mockMvc.perform(post("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(post(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(deviceRegistryRequest)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -54,8 +57,8 @@ class DeviceControllerTest {
         deviceRegistryRequest.setVersion("ver 0.1");
         deviceRegistryRequest.setNumber("89999999999");
 
-        this.mockMvc.perform(post("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(post(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceRegistryRequest)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -68,8 +71,8 @@ class DeviceControllerTest {
         deviceRegistryRequest.setVersion("");
         deviceRegistryRequest.setNumber("89999999999");
 
-        this.mockMvc.perform(post("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(post(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceRegistryRequest)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -82,8 +85,8 @@ class DeviceControllerTest {
         deviceRegistryRequest.setVersion(null);
         deviceRegistryRequest.setNumber("89999999999");
 
-        this.mockMvc.perform(post("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(post(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceRegistryRequest)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -96,8 +99,8 @@ class DeviceControllerTest {
         deviceRegistryRequest.setVersion("ver 0.1");
         deviceRegistryRequest.setNumber("");
 
-        this.mockMvc.perform(post("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(post(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceRegistryRequest)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -110,8 +113,8 @@ class DeviceControllerTest {
         deviceRegistryRequest.setVersion("ver 0.1");
         deviceRegistryRequest.setNumber(null);
 
-        this.mockMvc.perform(post("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(post(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceRegistryRequest)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -135,8 +138,8 @@ class DeviceControllerTest {
         deviceRegistryRequest.setVersion("ver 0.1");
         deviceRegistryRequest.setNumber(number);
 
-        this.mockMvc.perform(post("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(post(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceRegistryRequest)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -158,8 +161,8 @@ class DeviceControllerTest {
         deviceRegistryRequest.setVersion("ver 0.1");
         deviceRegistryRequest.setNumber(number);
 
-        this.mockMvc.perform(post("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(post(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceRegistryRequest)))
                 .andDo(print())
                 .andExpect(status().isCreated());
@@ -179,8 +182,8 @@ class DeviceControllerTest {
         DeviceDeleteRequest deviceDeleteRequest = new DeviceDeleteRequest();
         deviceDeleteRequest.setFirebaseToken(token);
 
-        this.mockMvc.perform(delete("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(delete(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceDeleteRequest)))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -191,8 +194,8 @@ class DeviceControllerTest {
         DeviceDeleteRequest deviceDeleteRequest = new DeviceDeleteRequest();
         deviceDeleteRequest.setFirebaseToken("");
 
-        this.mockMvc.perform(delete("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(delete(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceDeleteRequest)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -203,8 +206,8 @@ class DeviceControllerTest {
         DeviceDeleteRequest deviceDeleteRequest = new DeviceDeleteRequest();
         deviceDeleteRequest.setFirebaseToken(null);
 
-        this.mockMvc.perform(delete("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(delete(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(deviceDeleteRequest)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -212,8 +215,8 @@ class DeviceControllerTest {
 
     @Test
     void nullRequestCaseDeleteUser() throws Exception {
-        this.mockMvc.perform(delete("/device")
-                .contentType("application/json")
+        this.mockMvc.perform(delete(DEVICE_REST_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(null)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());

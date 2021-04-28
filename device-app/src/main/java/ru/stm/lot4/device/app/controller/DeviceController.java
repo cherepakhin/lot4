@@ -1,5 +1,9 @@
 package ru.stm.lot4.device.app.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +29,23 @@ public class DeviceController {
     }
 
     @PostMapping
-    private ResponseEntity registryUser(@RequestBody @Valid DeviceRegistryRequest deviceRegistryRequest){
+    @ApiOperation(
+            code = 201,
+            value = "Регистрация нового девайса в системе.",
+            notes = "Регистрация нового девайса в системе."
+    )
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Девайс зарегестрирован."),
+            @ApiResponse(code = 400, message = "Ошибка валидации входных данных.", response = String.class),
+            @ApiResponse(code = 500, message = "Ошибка на стороне сервера", response = String.class),
+    })
+    @ResponseStatus(code = HttpStatus.CREATED)
+    private ResponseEntity<String> registryUser(
+            @RequestBody
+            @Valid
+            @ApiParam(name = "Device Info", required = true, value = "Информация о девайсе.")
+            DeviceRegistryRequest deviceRegistryRequest
+    ){
         try {
             PhoneEntity phoneEntity = deviceService.registryDevice(deviceRegistryRequest);
             log.info("Device has been registry: {}", phoneEntity);
@@ -39,8 +59,21 @@ public class DeviceController {
         }
     }
 
+    @ApiOperation(
+            code = 200,
+            value = "Удаление девайса по Firebase Token",
+            notes = "Удаление девайса по Firebase Token"
+    )
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Девайс удален."),
+            @ApiResponse(code = 400, message = "Ошибка валидации входных данных.", response = String.class),
+            @ApiResponse(code = 500, message = "Ошибка на стороне сервера", response = String.class),
+    })
     @DeleteMapping
-    private ResponseEntity deleteUser(@RequestBody @Valid DeviceDeleteRequest deviceDeleteRequest){
+    private ResponseEntity<String> deleteUser(
+            @RequestBody
+            @Valid
+            @ApiParam(name = "Firebase Token", required = true, value = "Токен для удаления девайса.") DeviceDeleteRequest deviceDeleteRequest){
         try {
             Integer deletedCount = deviceService.deleteDeviceByToken(deviceDeleteRequest);
             log.info("{} devices has been deleted. {}", deletedCount, deviceDeleteRequest);
