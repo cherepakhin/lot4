@@ -3,7 +3,9 @@ receiver:
     rate: 15
 kafka:
   bootstrapAddress: ${KAFKA_HOST:localhost:9092}
-  topic: ${KAFKA_TOPIC:lot4-messages}
+  topic: ${KAFKA_TOPIC:lot4_messages}
+  topic_notify: ${KAFKA_TOPIC_NOTIFY:lot4_notify}
+  group_notify: ${KAFKA_GROUP_NOTIFY:lot4_group_notify}
 spring:
   datasource:
     url: ${PG_URL:jdbc:postgresql://localhost:5432/db}

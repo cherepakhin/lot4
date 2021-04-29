@@ -4,7 +4,7 @@ CREATE table if not exists mobile_application (
 );
 
 CREATE TABLE if not exists push_notification (
-	"id"            serial          not null UNIQUE,
+	"id"            varchar(255)    not null UNIQUE,
 	"title"         varchar(255)    not null,
     "body"          text            not null,
     "date"          timestamp       not null,

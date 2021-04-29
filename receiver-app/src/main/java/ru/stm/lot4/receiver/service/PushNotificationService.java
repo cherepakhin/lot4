@@ -2,9 +2,9 @@ package ru.stm.lot4.receiver.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import ru.stm.lot4.dto.PushNotificationRequest;
 import ru.stm.lot4.model.PushNotificationEntity;
 import ru.stm.lot4.model.PushNotificationStatusEnum;
-import ru.stm.lot4.receiver.dto.PushNotificationRequest;
 
 import java.util.Date;
 import java.util.List;
@@ -22,18 +22,20 @@ public interface PushNotificationService {
 
     /**
      * Метод для сохранения push-уведомления в базу
+     *
      * @param pushNotificationEntity - push-уведомление
      */
     void save(PushNotificationEntity pushNotificationEntity);
 
     /**
      * Метод для транзакционного сохранения push-уведомлений в базе
+     *
      * @param pushNotificationEntityList - push-уведомления
      */
     void saveAll(List<PushNotificationEntity> pushNotificationEntityList);
 
     /**
-     * @param date - дата
+     * @param date                       - дата
      * @param pushNotificationStatusEnum - статус push-уведомления
      * @return - список push-уведомлений
      */

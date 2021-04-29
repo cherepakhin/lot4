@@ -13,6 +13,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_MESSAGE_MAX_BYTES: 10485760
+      KAFKA_CREATE_TOPICS: 'lot4_notify,lot4_messages'
       JMX_PORT: '1099'
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
@@ -40,6 +41,19 @@ services:
     links:
       - db
 
+  notify-app:
+    image: 'notify-app:latest'
+    environment:
+      KAFKA_HOST: kafka:9092
+      KAFKA_TOPIC: lot4_notify
+      GRAYLOG_HOST: graylog
+      GRAYLOG_PORT: '12201'
+    ports:
+      - '8085:8080'
+    links:
+      - kafka
+      - graylog
+
   receiver-app:
     image: 'receiver-app:latest'
     environment:
@@ -47,7 +61,9 @@ services:
       PG_USER: postgres
       PG_PASSWORD: admin
       KAFKA_HOST: kafka:9092
-      KAFKA_TOPIC: lot4-messages
+      KAFKA_TOPIC: lot4_messages
+      KAFKA_TOPIC_NOTIFY: lot4_notify
+      KAFKA_GROUP_NOTIFY: lot4_group_notify
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
     ports:
@@ -61,7 +77,8 @@ services:
     image: 'sender-app:latest'
     environment:
       KAFKA_HOST: kafka:9092
-      KAFKA_TOPIC: lot4-messages
+      KAFKA_TOPIC: lot4_messages
+      KAFKA_NAME_GROUP: lot4_senders
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
     ports:

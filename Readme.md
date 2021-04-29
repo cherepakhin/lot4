@@ -5,7 +5,8 @@
 Система состоит из модулей:
 
 - [Регистрация устройств](device-app/Readme.md)
-- [Приемник событий](receiver-app/Readme.md)
+- [Приемник событий](notify-app/Readme.md)
+- [Обработка событий](receiver-app/Readme.md)
 - [Отправка в FCM](sender-app/Readme.md)
 - [Получение статистики](statistic-app/Readme.md)
 - [Web-интерфейс](front-app/README.md)

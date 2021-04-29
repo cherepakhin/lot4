@@ -4,8 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import ru.stm.lot4.dto.PushNotificationDto;
+import ru.stm.lot4.dto.PushNotificationRequest;
 import ru.stm.lot4.model.PushNotificationEntity;
-import ru.stm.lot4.receiver.dto.PushNotificationRequest;
 
 /**
  * Сервис преобразования объектов из:

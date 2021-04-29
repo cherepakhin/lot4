@@ -1,8 +1,8 @@
 kafka:
   host: ${KAFKA_HOST:localhost:9092}
-  topic: ${KAFKA_TOPIC:lot4-messages}
+  topic: ${KAFKA_TOPIC:lot4_messages}
   # Имя группы kafka для нескольких consumers
-  namegroup: ${KAFKA_NAME_GROUP:lot4-senders}
+  namegroup: ${KAFKA_NAME_GROUP:lot4_senders}
 fcm:
   service-account-key: ${SERVICE_ACCOUNT_KEY:""}
   count-thread: ${COUNT_THREAD:100}

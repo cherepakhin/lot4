@@ -4,11 +4,11 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.listener.MessageListener;
 import ru.stm.lot4.dto.PushNotificationDto;
 
-public class KafkaConsumer implements MessageListener<String, PushNotificationDto> {
+public class KafkaPushNotificationDtoConsumer implements MessageListener<String, PushNotificationDto> {
 
     FirebaseSenderService firebaseSenderService;
 
-    public KafkaConsumer(FirebaseSenderService firebaseSenderService) {
+    public KafkaPushNotificationDtoConsumer(FirebaseSenderService firebaseSenderService) {
         this.firebaseSenderService = firebaseSenderService;
     }
 
