@@ -1,4 +1,4 @@
-package ru.stm.lot4.notify;
+package ru.stm.lot4.notify.controller;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.stm.lot4.dto.PushNotificationRequest;
+import ru.stm.lot4.notify.service.impl.NotifyServiceImpl;
 
 import javax.validation.Valid;
 
@@ -19,7 +20,7 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "*")
 public class NotifyController {
 
-    private final NotifyService notifyService;
+    private final NotifyServiceImpl notifyService;
 
     @PostMapping(value = "/create")
     @ApiOperation(

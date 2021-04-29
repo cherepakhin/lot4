@@ -1,4 +1,4 @@
-package ru.stm.lot4.notify;
+package ru.stm.lot4.notify.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import ru.stm.lot4.dto.PushNotificationRequest;
+import ru.stm.lot4.notify.controller.NotifyController;
+import ru.stm.lot4.notify.service.impl.NotifyServiceImpl;
 
 import java.util.Collections;
 import java.util.Date;
@@ -27,7 +29,7 @@ class NotifyControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private NotifyService notifyService;
+    private NotifyServiceImpl notifyService;
 
     @Test
     void createNotValid() throws Exception {

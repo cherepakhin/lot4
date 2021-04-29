@@ -11,7 +11,7 @@
 - [Получение статистики](statistic-app/Readme.md)
 - [Web-интерфейс](front-app/README.md)
 
-![Схема](doc/diag3.png)
+![Схема](doc/diag.png)
 
 ### Сборка
 
@@ -28,9 +28,3 @@ docker-compose up
 ### Логирование
 
 В контейнере развернут Graylog на [http://127.0.0.1:9999](http://127.0.0.1:9999). Имя/пароль: admin/admin. Для приема логов от программ нужно добавить Input Stream __GELF UDP__ на порту 12201
-
-### Доступ к UI
-
-````
-http://localhost:4200
-````

@@ -9,12 +9,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
+import ru.stm.lot4.dto.PushNotificationRequest;
+import ru.stm.lot4.notify.service.NotifyService;
+import ru.stm.lot4.notify.service.impl.NotifyServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaProducerConfig {
+public class KafkaProducerConfiguration {
 
     ObjectMapper mapper = new ObjectMapper();
     @Value(value = "${kafka.bootstrapAddress}")
@@ -40,10 +44,5 @@ public class KafkaProducerConfig {
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
-    }
-
-    @Bean
-    public NotifyService notifyService(KafkaTemplate<String, String> kafkaTemplate) {
-        return new NotifyService(kafkaTemplate, topic);
     }
 }
