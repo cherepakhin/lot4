@@ -11,7 +11,7 @@
 - [Получение статистики](statistic-app/Readme.md)
 - [Web-интерфейс](front-app/README.md)
 
-![Схема](doc/diag.png)
+![Схема](doc/diag1.png)
 
 ### Сборка
 
