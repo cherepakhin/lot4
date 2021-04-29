@@ -49,13 +49,6 @@ public class PushNotificationSchedulerServiceImpl implements PushNotificationSch
 
     @Override
     public void sendPushNotificationToKafka() {
-        PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
-        pushNotificationRequest.setId("123213123123123");
-        pushNotificationRequest.setBody("13123213123");
-        pushNotificationRequest.setDate(new Date());
-        pushNotificationRequest.setTitle("123123123");
-        pushNotificationRequest.setPhones(Collections.singleton("+79101375301"));
-        pushNotificationService.saveRequest(pushNotificationRequest);
         List<PushNotificationEntity> pushNotificationList = pushNotificationService.receiveActualAvailablePushNotification();
         if (pushNotificationList.isEmpty()) {
             return;
