@@ -20,7 +20,7 @@ CREATE TABLE if not exists phone (
 );
 
 CREATE TABLE if not exists push_notification_phone (
-    "push_notification_id"  int  not null,
+    "push_notification_id"  varchar(255)  not null,
     "phone_id"  int  not null
 );
 
