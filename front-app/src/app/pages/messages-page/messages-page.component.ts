@@ -46,7 +46,7 @@ export class MessagesPageComponent{
       this.apiService.getMessages(this.phoneFormControl.value).subscribe(
         (res: Array<Message>) => {
           this.messages = res;
-          if (this.messages && this.messages.length > 0) {
+          if (this.messages && this.messages.length === 0) {
             this.errorText = ErrorsEnum.NO_MESSAGES_ERROR;
           }
           this.isDataLoaded = true;
@@ -55,6 +55,7 @@ export class MessagesPageComponent{
         () => {
           this.errorText = ErrorsEnum.LOADING_ERROR;
           this.isLoading = false;
+          this.isDataLoaded = false;
         });
     }
   }
