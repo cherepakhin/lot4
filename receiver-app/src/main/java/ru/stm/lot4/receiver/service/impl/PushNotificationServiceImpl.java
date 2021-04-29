@@ -11,16 +11,12 @@ import ru.stm.lot4.model.PhoneEntity;
 import ru.stm.lot4.model.PushNotificationEntity;
 import ru.stm.lot4.model.PushNotificationStatusEnum;
 import ru.stm.lot4.receiver.mapper.PushNotificationMapper;
+import ru.stm.lot4.receiver.service.PushNotificationService;
 import ru.stm.lot4.repository.PhoneRepository;
 import ru.stm.lot4.repository.PushNotificationRepository;
-import ru.stm.lot4.receiver.service.PushNotificationService;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Collection;
 
 @RequiredArgsConstructor
 @Service
@@ -46,12 +42,14 @@ public class PushNotificationServiceImpl implements PushNotificationService {
                 .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
-        if(phones.isEmpty()) {
+        if (phones.isEmpty()) {
             log.warn("Not save push-notification! Phones not found");
             return null;
         }
         PushNotificationEntity pushNotificationEntity = pushNotificationMapper.fromRequest(pushNotificationRequest);
-        pushNotificationEntity.setPhones(phones);
+        for (PhoneEntity phoneEntity : phones) {
+            pushNotificationEntity.addPhone(phoneEntity);
+        }
         pushNotificationEntity.setStatus(PushNotificationStatusEnum.AVAILABLE);
         return pushNotificationRepository.save(pushNotificationEntity);
     }
@@ -75,8 +73,8 @@ public class PushNotificationServiceImpl implements PushNotificationService {
     @Transactional
     public List<PushNotificationEntity> receiveActualAvailablePushNotification() {
         List<PushNotificationEntity> pushNotificationEntityList = findAllByDateBeforeAndStatus(
-                        new Date(),
-                        PushNotificationStatusEnum.AVAILABLE);
+                new Date(),
+                PushNotificationStatusEnum.AVAILABLE);
         pushNotificationEntityList
                 .forEach(pushNotificationEntity -> pushNotificationEntity
                         .setStatus(PushNotificationStatusEnum.NOT_AVAILABLE));
