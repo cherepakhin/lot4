@@ -15,7 +15,7 @@ import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import ru.stm.lot4.dto.PushNotificationRequest;
 import ru.stm.lot4.receiver.exception.KafkaErrorHandler;
-import ru.stm.lot4.receiver.service.KafkaPushNotificationRequestConsumer;
+import ru.stm.lot4.receiver.service.impl.PushNotificationRequestConsumerImpl;
 import ru.stm.lot4.receiver.service.PushNotificationService;
 
 import java.util.HashMap;
@@ -84,8 +84,8 @@ public class KafkaConsumerConfig {
             KafkaErrorHandler kafkaErrorHandler) {
         ContainerProperties containerProps = new ContainerProperties(topic);
         containerProps.setGroupId(nameGroup);
-        KafkaPushNotificationRequestConsumer kafkaConsumer =
-                new KafkaPushNotificationRequestConsumer(pushNotificationService);
+        PushNotificationRequestConsumerImpl kafkaConsumer =
+                new PushNotificationRequestConsumerImpl(pushNotificationService);
         containerProps.setMessageListener(kafkaConsumer);
         KafkaMessageListenerContainer<String, PushNotificationRequest> container =
                 new KafkaMessageListenerContainer<>(consumerFactory, containerProps);
