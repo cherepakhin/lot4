@@ -9,6 +9,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import ru.stm.lot4.dto.MobileApplicationDto;
 import ru.stm.lot4.dto.PhoneDto;
 import ru.stm.lot4.dto.PushNotificationDto;
+import ru.stm.lot4.dto.PushNotificationRequest;
 import ru.stm.lot4.model.PushNotificationEntity;
 import ru.stm.lot4.model.PushNotificationStatusEnum;
 import ru.stm.lot4.receiver.mapper.PushNotificationMapper;
@@ -16,6 +17,8 @@ import ru.stm.lot4.receiver.service.PushNotificationSchedulerService;
 import ru.stm.lot4.receiver.service.PushNotificationSenderService;
 import ru.stm.lot4.receiver.service.PushNotificationService;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -46,6 +49,13 @@ public class PushNotificationSchedulerServiceImpl implements PushNotificationSch
 
     @Override
     public void sendPushNotificationToKafka() {
+        PushNotificationRequest pushNotificationRequest = new PushNotificationRequest();
+        pushNotificationRequest.setId("123213123123123");
+        pushNotificationRequest.setBody("13123213123");
+        pushNotificationRequest.setDate(new Date());
+        pushNotificationRequest.setTitle("123123123");
+        pushNotificationRequest.setPhones(Collections.singleton("+79101375301"));
+        pushNotificationService.saveRequest(pushNotificationRequest);
         List<PushNotificationEntity> pushNotificationList = pushNotificationService.receiveActualAvailablePushNotification();
         if (pushNotificationList.isEmpty()) {
             return;

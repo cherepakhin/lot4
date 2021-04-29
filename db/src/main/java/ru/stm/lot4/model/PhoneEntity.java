@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,10 +40,10 @@ public class PhoneEntity {
     String token;
     @ManyToOne
     MobileApplicationEntity app;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "push_notification_phone",
             joinColumns = @JoinColumn(name = "phone_id"),
-            inverseJoinColumns = @JoinColumn(name = "push_notification_id"))
+            inverseJoinColumns = @JoinColumn(name = "push_notification_id", referencedColumnName = "id"))
     Set<PushNotificationEntity> pushNotifications = new HashSet<>();
     @Column(name = "is_active")
     Boolean isActive;
