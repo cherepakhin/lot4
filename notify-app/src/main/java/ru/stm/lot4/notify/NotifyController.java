@@ -33,7 +33,6 @@ public class NotifyController {
             @ApiResponse(code = 500, message = "Ошибка на стороне сервера", response = String.class)
     })
     public ResponseEntity<String> create(@Valid @RequestBody PushNotificationRequest pushNotificationRequest) {
-        log.info(pushNotificationRequest.toString());
         String uuid = notifyService.sendRequest(pushNotificationRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

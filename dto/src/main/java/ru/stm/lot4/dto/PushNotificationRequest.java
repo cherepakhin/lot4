@@ -24,6 +24,6 @@ public class PushNotificationRequest {
     @NotBlank
     String body;
     Set<String> phones = new HashSet<>();
-    @NotNull
-    Date date;
+//    @NotNull
+    Date date = new Date();
 }
