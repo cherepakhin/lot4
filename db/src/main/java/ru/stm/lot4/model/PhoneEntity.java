@@ -21,9 +21,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Setter
 @Getter
@@ -43,9 +41,9 @@ public class PhoneEntity {
     MobileApplicationEntity app;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "push_notification_phone",
-            joinColumns = @JoinColumn(name = "push_notification_id"),
-            inverseJoinColumns = @JoinColumn(name = "phone_id"))
-    List<PushNotificationEntity> pushNotifications = new ArrayList<>();
+            joinColumns = @JoinColumn(name = "phone_id"),
+            inverseJoinColumns = @JoinColumn(name = "push_notification_id"))
+    Set<PushNotificationEntity> pushNotifications = new HashSet<>();
     @Column(name = "is_active")
     Boolean isActive;
 }

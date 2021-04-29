@@ -21,10 +21,7 @@ public class PushNotificationEntity {
     String id;
     String title = "";
     String body = "";
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "push_notification_phone",
-            joinColumns = @JoinColumn(name = "phone_id"),
-            inverseJoinColumns = @JoinColumn(name = "push_notification_id"))
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pushNotifications")
     Set<PhoneEntity> phones = new HashSet<>();
     Date date;
     PushNotificationStatusEnum status;
