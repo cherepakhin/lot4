@@ -55,6 +55,7 @@ export class MessagesPageComponent{
         () => {
           this.errorText = ErrorsEnum.LOADING_ERROR;
           this.isLoading = false;
+          this.isDataLoaded = false;
         });
     }
   }
