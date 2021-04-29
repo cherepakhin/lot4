@@ -34,7 +34,7 @@ export class VersionListPageComponent {
     this.apiService.getVersions().subscribe(
       (res: Array<VersionsTableData>) => {
       this.tableData = res;
-      if (this.tableData && this.tableData.length > 0) {
+      if (this.tableData && this.tableData.length === 0) {
           this.errorText = ErrorsEnum.NO_VERSIONS_ERROR;
         }
       this.isDataLoaded = true;
