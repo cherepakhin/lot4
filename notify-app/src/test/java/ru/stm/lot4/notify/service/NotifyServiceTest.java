@@ -19,7 +19,7 @@ class NotifyServiceTest {
     @Test
     void sendRequest() throws JsonProcessingException {
         NotifyService notifyService = new NotifyServiceImpl(kafkaTemplate, mapper);
-        ReflectionTestUtils.setField(notifyService, "topic", "TEST");
+        ReflectionTestUtils.setField(notifyService, "topic", "TOPIC");
         PushNotificationRequest request = new PushNotificationRequest();
         request.setTitle("TITLE");
         String uuid = notifyService.sendRequest(request);
