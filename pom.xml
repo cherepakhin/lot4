@@ -27,7 +27,8 @@
 		<module>device-app</module>
 		<module>statistic-app</module>
 		<module>front-app</module>
-    </modules>
+		<module>notify-app</module>
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

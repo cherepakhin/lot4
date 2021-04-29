@@ -1,14 +1,8 @@
-package ru.stm.lot4.receiver.dto;
+package ru.stm.lot4.dto;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
-import ru.stm.lot4.dto.PhoneDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,6 +18,7 @@ import java.util.Set;
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PushNotificationRequest {
+    String id="";
     @NotBlank
     String title;
     @NotBlank

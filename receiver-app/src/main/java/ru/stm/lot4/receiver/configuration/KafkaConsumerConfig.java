@@ -1,4 +1,4 @@
-package ru.stm.lot4.sender;
+package ru.stm.lot4.receiver.configuration;
 
 import com.fasterxml.jackson.databind.deser.std.StringDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -13,36 +13,28 @@ import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import ru.stm.lot4.dto.PushNotificationDto;
+import ru.stm.lot4.dto.PushNotificationRequest;
+import ru.stm.lot4.receiver.exception.KafkaErrorHandler;
+import ru.stm.lot4.receiver.service.KafkaPushNotificationRequestConsumer;
+import ru.stm.lot4.receiver.service.PushNotificationService;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Configuration
-@EnableScheduling
 @EnableKafka
-public class SenderConfig {
-    private static final String FIREBASE_API_URL = "https://fcm.googleapis.com/fcm/send";
-
-    @Value("${kafka.host}")
-    private String kafkaHost;
-    @Value("${kafka.namegroup}")
+public class KafkaConsumerConfig {
+    @Value(value = "${kafka.bootstrapAddress}")
+    private String bootstrapAddress;
+    @Value("${kafka.group_notify}")
     private String nameGroup;
-    @Value("${kafka.topic}")
+    @Value("${kafka.topic_notify}")
     private String topic;
-
-    @Value("${fcm.service-account-key}")
-    private String fcmServiceAccountKey;
-    @Value("${fcm.count-thread}")
-    private Integer fcmCountThread;
 
     @Bean
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -54,8 +46,9 @@ public class SenderConfig {
      * Factory для читателя Kafka
      */
     @Bean
-    public ConsumerFactory<String, PushNotificationDto> consumerFactory() {
-        final JsonDeserializer<PushNotificationDto> jsonDeserializer = new JsonDeserializer<>(PushNotificationDto.class);
+    public ConsumerFactory<String, PushNotificationRequest> consumerFactory() {
+        final JsonDeserializer<PushNotificationRequest> jsonDeserializer =
+                new JsonDeserializer<>(PushNotificationRequest.class);
         jsonDeserializer.addTrustedPackages("*");
         ErrorHandlingDeserializer errorHandlingDeserializer
                 = new ErrorHandlingDeserializer<>(jsonDeserializer);
@@ -71,45 +64,32 @@ public class SenderConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, PushNotificationDto> kafkaListenerContainerFactory(
+    public ConcurrentKafkaListenerContainerFactory<String, PushNotificationRequest> kafkaListenerContainerFactory(
             KafkaErrorHandler kafkaErrorHandler
     ) {
-        ConcurrentKafkaListenerContainerFactory<String, PushNotificationDto> factory =
+        ConcurrentKafkaListenerContainerFactory<String, PushNotificationRequest> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setErrorHandler(kafkaErrorHandler);
         return factory;
     }
 
-    @Bean
-    FirebaseSenderService firebaseSenderService() {
-        ExecutorService executors = Executors.newFixedThreadPool(fcmCountThread);
-        return new FirebaseSenderService(fcmServiceAccountKey, executors, FIREBASE_API_URL);
-    }
-
     /**
      * Привязка Kafka-listener к сервису отправки событий в FirebaseSenderService
      */
     @Bean
-    public KafkaMessageListenerContainer<String, PushNotificationDto> firebaseConsumerContainer(
-            FirebaseSenderService firebaseSenderService,
-            ConsumerFactory<String, PushNotificationDto> consumerFactory,
+    public KafkaMessageListenerContainer<String, PushNotificationRequest> firebaseConsumerContainer(
+            PushNotificationService pushNotificationService,
+            ConsumerFactory<String, PushNotificationRequest> consumerFactory,
             KafkaErrorHandler kafkaErrorHandler) {
         ContainerProperties containerProps = new ContainerProperties(topic);
         containerProps.setGroupId(nameGroup);
-        KafkaPushNotificationDtoConsumer kafkaPushNotificationDtoConsumer = new KafkaPushNotificationDtoConsumer(firebaseSenderService);
-        containerProps.setMessageListener(kafkaPushNotificationDtoConsumer);
-        KafkaMessageListenerContainer<String, PushNotificationDto> container =
+        KafkaPushNotificationRequestConsumer kafkaConsumer =
+                new KafkaPushNotificationRequestConsumer(pushNotificationService);
+        containerProps.setMessageListener(kafkaConsumer);
+        KafkaMessageListenerContainer<String, PushNotificationRequest> container =
                 new KafkaMessageListenerContainer<>(consumerFactory, containerProps);
         container.setErrorHandler(kafkaErrorHandler);
         return container;
-    }
-
-    @Bean
-    IFirebaseChecker firebaseChecker(KafkaMessageListenerContainer<String, PushNotificationDto>
-                                             firebaseConsumerContainer, FirebaseSenderService firebaseSenderService) {
-        FirebaseChecker checker = new FirebaseChecker(firebaseConsumerContainer, FIREBASE_API_URL);
-        firebaseSenderService.setFirebaseChecker(checker);
-        return checker;
     }
 }
