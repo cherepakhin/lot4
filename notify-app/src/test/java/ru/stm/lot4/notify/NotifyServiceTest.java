@@ -1,6 +1,7 @@
 package ru.stm.lot4.notify;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.kafka.core.KafkaTemplate;
 import ru.stm.lot4.dto.PushNotificationRequest;
@@ -10,7 +11,8 @@ import static org.mockito.Mockito.*;
 
 class NotifyServiceTest {
 
-    KafkaTemplate<String, PushNotificationRequest> kafkaTemplate = mock(KafkaTemplate.class);
+    KafkaTemplate<String, String> kafkaTemplate = mock(KafkaTemplate.class);
+    ObjectMapper mapper = new ObjectMapper();
 
     @Test
     void sendRequest() throws JsonProcessingException {
@@ -20,8 +22,9 @@ class NotifyServiceTest {
         String uuid = notifyService.sendRequest(request);
         assertFalse(uuid.isEmpty());
         request.setId(uuid);
+        String json=mapper.writeValueAsString(request);
         verify(kafkaTemplate, times(1))
-                .send("TOPIC", request);
+                .send("TOPIC", json);
     }
 
 }

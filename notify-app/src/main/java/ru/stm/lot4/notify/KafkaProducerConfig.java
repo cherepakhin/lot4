@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.kafka.support.serializer.JsonSerializer;
-import ru.stm.lot4.dto.PushNotificationRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +23,8 @@ public class KafkaProducerConfig {
     private String topic;
 
     @Bean
-    public ProducerFactory<String, PushNotificationRequest> producerFactory() {
+    public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
-        JsonSerializer<PushNotificationRequest> jsonSerializer = new JsonSerializer<>();
         configProps.put(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 bootstrapAddress);
@@ -36,17 +33,17 @@ public class KafkaProducerConfig {
                 StringSerializer.class);
         configProps.put(
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                jsonSerializer);
+                StringSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
     @Bean
-    public KafkaTemplate<String, PushNotificationRequest> kafkaTemplate(ProducerFactory<String, PushNotificationRequest> producerFactory) {
+    public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
     }
 
     @Bean
-    public NotifyService notifyService(KafkaTemplate<String, PushNotificationRequest> kafkaTemplate) {
+    public NotifyService notifyService(KafkaTemplate<String, String> kafkaTemplate) {
         return new NotifyService(kafkaTemplate, topic);
     }
 }

@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.stm.lot4.dto.PushNotificationRequest;
 
 import javax.validation.Valid;
@@ -19,6 +16,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/receiver/pushNotification")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "*")
 public class NotifyController {
 
     private final NotifyService notifyService;
@@ -35,6 +33,7 @@ public class NotifyController {
             @ApiResponse(code = 500, message = "Ошибка на стороне сервера", response = String.class)
     })
     public ResponseEntity<String> create(@Valid @RequestBody PushNotificationRequest pushNotificationRequest) {
+        log.info(pushNotificationRequest.toString());
         String uuid = notifyService.sendRequest(pushNotificationRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

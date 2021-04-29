@@ -1,5 +1,7 @@
 package ru.stm.lot4.notify;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -12,9 +14,10 @@ import java.util.UUID;
 public class NotifyService {
 
     private final String topic;
-    KafkaTemplate<String, PushNotificationRequest> kafkaTemplate;
+    KafkaTemplate<String, String> kafkaTemplate;
+    ObjectMapper mapper = new ObjectMapper();
 
-    public NotifyService(KafkaTemplate<String, PushNotificationRequest> kafkaTemplate, String topic) {
+    public NotifyService(KafkaTemplate<String, String> kafkaTemplate, String topic) {
         this.kafkaTemplate = kafkaTemplate;
         this.topic = topic;
     }
@@ -22,8 +25,13 @@ public class NotifyService {
     String sendRequest(PushNotificationRequest pushNotificationRequest) {
         String uuid = UUID.randomUUID().toString();
         pushNotificationRequest.setId(uuid);
-        ListenableFuture<SendResult<String, PushNotificationRequest>> future = kafkaTemplate
-                .send(topic, pushNotificationRequest);
+        try {
+            ListenableFuture<SendResult<String, String>> future = kafkaTemplate
+                    .send(topic, mapper.writeValueAsString(pushNotificationRequest));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
         return uuid;
     }
 }
