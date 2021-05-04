@@ -3,6 +3,7 @@ package ru.stm.lot4.receiver.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +60,7 @@ public class PushNotificationServiceImpl implements PushNotificationService {
 
     @Override
     public List<PushNotificationEntity> findAllByDateBeforeAndStatus(Date date, PushNotificationStatusEnum pushNotificationStatusEnum) {
-        return pushNotificationRepository.findAllByDateBeforeAndStatus(date, pushNotificationStatusEnum);
+        return pushNotificationRepository.findAllByDateBeforeAndStatus(date, pushNotificationStatusEnum, PageRequest.of(0, 100));
     }
 
     @Override
