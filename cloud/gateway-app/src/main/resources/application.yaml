@@ -1,0 +1,26 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: device_route
+          uri: lb://device
+          predicates:
+            - Path=/device/**
+          filters:
+            - StripPrefix=1
+        - id: statistic_route
+          uri: lb://statistic
+          predicates:
+            - Path=/statistic/**
+          filters:
+            - StripPrefix=1
+        - id: notify_route
+            uri: lb://notify
+            predicates:
+              - Path=/notify/**
+            filters:
+              - StripPrefix=1
