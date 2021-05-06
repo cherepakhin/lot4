@@ -69,8 +69,7 @@ public class PushNotificationRepositoryIntegrationTest {
         pushNotificationRepository.save(notification);
 
         List<PushNotificationEntity> found = pushNotificationRepository.findAllByDateBeforeAndStatus(cal.getTime(),
-                PushNotificationStatusEnum.AVAILABLE,
-                PageRequest.of(0,100));
+                PushNotificationStatusEnum.AVAILABLE);
         assertEquals(1, found.size());
     }
 }

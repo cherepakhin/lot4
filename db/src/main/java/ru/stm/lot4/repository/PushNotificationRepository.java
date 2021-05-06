@@ -18,7 +18,7 @@ import static ru.stm.lot4.constants.QueryConstants.SELECT_RECEIVED_MESSAGES_BY_P
 public interface PushNotificationRepository extends JpaRepository<PushNotificationEntity, String> {
 
     @Query("select p from PushNotificationEntity p where p.date <= :date and p.status = :status")
-    List<PushNotificationEntity> findAllByDateBeforeAndStatus(Date date, PushNotificationStatusEnum status, Pageable pageable);
+    List<PushNotificationEntity> findAllByDateBeforeAndStatus(Date date, PushNotificationStatusEnum status);
 
     @Query(nativeQuery = true, value = SELECT_RECEIVED_MESSAGES_BY_PHONE)
     List<PushNotificationEntity> findReceivedMessagesByPhoneAndStatus(String phone, int status, Pageable page);

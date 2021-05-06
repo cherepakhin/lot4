@@ -60,7 +60,7 @@ public class PushNotificationServiceImpl implements PushNotificationService {
 
     @Override
     public List<PushNotificationEntity> findAllByDateBeforeAndStatus(Date date, PushNotificationStatusEnum pushNotificationStatusEnum) {
-        return pushNotificationRepository.findAllByDateBeforeAndStatus(date, pushNotificationStatusEnum, PageRequest.of(0, 100));
+        return pushNotificationRepository.findAllByDateBeforeAndStatus(date, pushNotificationStatusEnum);
     }
 
     @Override

@@ -86,7 +86,7 @@ public class PushNotificationServiceTest {
     void test_receive_available() {
         pushNotificationService.receiveActualAvailablePushNotification();
         verify(pushNotificationRepository, times(1))
-                .findAllByDateBeforeAndStatus(any(), eq(PushNotificationStatusEnum.AVAILABLE),eq(PageRequest.of(0,100)));
+                .findAllByDateBeforeAndStatus(any(), eq(PushNotificationStatusEnum.AVAILABLE));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class PushNotificationServiceTest {
         Date date = new Date();
         pushNotificationService.findAllByDateBeforeAndStatus(date, PushNotificationStatusEnum.AVAILABLE);
         verify(pushNotificationRepository, times(1))
-                .findAllByDateBeforeAndStatus(date, PushNotificationStatusEnum.AVAILABLE,PageRequest.of(0,100));
+                .findAllByDateBeforeAndStatus(date, PushNotificationStatusEnum.AVAILABLE);
     }
 
 
