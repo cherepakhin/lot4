@@ -22,6 +22,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.*;
 
 @Setter
@@ -32,7 +33,7 @@ import java.util.*;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "phone")
-public class PhoneEntity {
+public class PhoneEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
