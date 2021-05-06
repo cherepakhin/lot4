@@ -24,7 +24,7 @@ import java.util.Map;
 public class CacheConfig extends CachingConfigurerSupport {
 
     @Value("${cache.ttl}")
-    Integer ttl;
+    Integer ttl = -1;
     @Value("${cache.host}")
     String host;
     @Value("${cache.port}")
