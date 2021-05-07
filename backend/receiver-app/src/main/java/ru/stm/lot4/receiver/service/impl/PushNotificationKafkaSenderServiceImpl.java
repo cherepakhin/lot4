@@ -2,7 +2,6 @@ package ru.stm.lot4.receiver.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,17 +13,15 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import ru.stm.lot4.dto.PushNotificationDto;
 import ru.stm.lot4.receiver.service.PushNotificationSenderService;
 
+@Service
+@RequiredArgsConstructor
 @Slf4j
 public class PushNotificationKafkaSenderServiceImpl implements PushNotificationSenderService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
+    @Value(value = "${kafka.topic}")
     private String topic;
-
-    public PushNotificationKafkaSenderServiceImpl(KafkaTemplate<String, String> kafkaTemplate, String topic) {
-        this.kafkaTemplate = kafkaTemplate;
-        this.topic = topic;
-    }
 
     @Override
     public void send(PushNotificationDto pushNotificationDto,

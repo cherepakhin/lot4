@@ -38,7 +38,7 @@ public class PushNotificationKafkaSenderServiceTest {
 
     @BeforeEach
     public void init() {
-        pushNotificationSenderService = new PushNotificationKafkaSenderServiceImpl(kafkaTemplate,KAFKA_TOPIC);
+        pushNotificationSenderService = new PushNotificationKafkaSenderServiceImpl(kafkaTemplate, objectMapper);
         ReflectionTestUtils.setField(pushNotificationSenderService, "topic", KAFKA_TOPIC);
     }
 
