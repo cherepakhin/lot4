@@ -31,8 +31,9 @@ public class NotifyServiceImpl implements NotifyService {
         String uuid = UUID.randomUUID().toString();
         pushNotificationRequest.setId(uuid);
         try {
+            String notificationJson = mapper.writeValueAsString(pushNotificationRequest);
             ListenableFuture<SendResult<String, String>> future = kafkaTemplate
-                    .send(topic, mapper.writeValueAsString(pushNotificationRequest));
+                    .send(topic, notificationJson);
             future.addCallback(receiveCallback(pushNotificationRequest));
         } catch (JsonProcessingException e) {
             e.printStackTrace();

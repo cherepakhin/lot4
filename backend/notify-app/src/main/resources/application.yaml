@@ -7,7 +7,7 @@ spring:
 
 kafka:
   bootstrapAddress: ${KAFKA_HOST:localhost:9092}
-  topic: ${KAFKA_TOPIC:lot4-notify}
+  topic: ${KAFKA_TOPIC:lot4_notify}
 
 management:
   endpoint:

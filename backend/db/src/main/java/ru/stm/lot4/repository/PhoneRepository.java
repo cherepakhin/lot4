@@ -1,5 +1,6 @@
 package ru.stm.lot4.repository;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +16,7 @@ public interface PhoneRepository extends JpaRepository<PhoneEntity, Long> {
     @Modifying
     @Query("UPDATE PhoneEntity as p set p.isActive = false where p.token = :token")
     Integer deleteByToken(String token);
+
+    @Cacheable(cacheNames = "phones", key = "#number")
     List<PhoneEntity> findByNumber(String number);
 }
