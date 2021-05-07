@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 public class PushNotificationRepositoryIntegrationTest {
 
+    public static final PageRequest PAGE_REQUEST = PageRequest.of(0, 100);
+
     @Autowired
     PhoneRepository phoneRepository;
 
@@ -69,7 +71,7 @@ public class PushNotificationRepositoryIntegrationTest {
         pushNotificationRepository.save(notification);
 
         List<PushNotificationEntity> found = pushNotificationRepository.findAllByDateBeforeAndStatus(cal.getTime(),
-                PushNotificationStatusEnum.AVAILABLE);
+                PushNotificationStatusEnum.AVAILABLE, PAGE_REQUEST);
         assertEquals(1, found.size());
     }
 }

@@ -23,7 +23,7 @@ import java.util.Set;
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PushNotificationDto {
-    Long id;
+    String id;
     @NotBlank
     String title;
     @NotBlank

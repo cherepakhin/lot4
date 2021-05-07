@@ -3,6 +3,7 @@ package ru.stm.lot4.receiver.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PushNotificationServiceImpl implements PushNotificationService {
 
+    public static final PageRequest PAGE_REQUEST = PageRequest.of(0, 100);
+
     private final PushNotificationRepository pushNotificationRepository;
     private final PhoneRepository phoneRepository;
     private final PushNotificationMapper pushNotificationMapper;
@@ -38,7 +41,7 @@ public class PushNotificationServiceImpl implements PushNotificationService {
     public PushNotificationEntity saveRequest(PushNotificationRequest pushNotificationRequest) {
         Set<PhoneEntity> phones = pushNotificationRequest.getPhones()
                 .stream()
-                .map(phoneRepository::findByNumber)
+                .map(number -> phoneRepository.findByNumberAndIsActive(number, true))
                 .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
@@ -59,7 +62,7 @@ public class PushNotificationServiceImpl implements PushNotificationService {
 
     @Override
     public List<PushNotificationEntity> findAllByDateBeforeAndStatus(Date date, PushNotificationStatusEnum pushNotificationStatusEnum) {
-        return pushNotificationRepository.findAllByDateBeforeAndStatus(date, pushNotificationStatusEnum);
+        return pushNotificationRepository.findAllByDateBeforeAndStatus(date, pushNotificationStatusEnum, PAGE_REQUEST);
     }
 
     @Override

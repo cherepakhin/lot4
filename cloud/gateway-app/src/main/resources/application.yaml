@@ -19,8 +19,14 @@ spring:
           filters:
             - StripPrefix=1
         - id: notify_route
-            uri: lb://notify
-            predicates:
-              - Path=/notify/**
-            filters:
-              - StripPrefix=1
+          uri: lb://notify
+          predicates:
+            - Path=/notify/**
+          filters:
+            - StripPrefix=1
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST:http://localhost:8761/eureka}

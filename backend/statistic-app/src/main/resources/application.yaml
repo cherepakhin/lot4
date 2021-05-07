@@ -28,3 +28,13 @@ management:
     web:
       exposure:
         include: "*"
+
+cache:
+  host: ${REDIS_HOST:redis}
+  port: ${REDIS_PORT:6379}
+  ttl: ${REDIS_TTL:-1}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST:http://localhost:8761/eureka}

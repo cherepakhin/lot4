@@ -3,6 +3,7 @@ package ru.stm.lot4.receiver.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import ru.stm.lot4.model.MobileApplicationEntity;
 import ru.stm.lot4.model.PhoneEntity;
@@ -26,6 +27,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 public class PushNotificationServiceTest {
+
+    public static final PageRequest PAGE_REQUEST = PageRequest.of(0, 100);
+
     private PushNotificationService pushNotificationService;
 
     private PushNotificationRepository pushNotificationRepository = mock(PushNotificationRepository.class);
@@ -85,7 +89,7 @@ public class PushNotificationServiceTest {
     void test_receive_available() {
         pushNotificationService.receiveActualAvailablePushNotification();
         verify(pushNotificationRepository, times(1))
-                .findAllByDateBeforeAndStatus(any(), eq(PushNotificationStatusEnum.AVAILABLE));
+                .findAllByDateBeforeAndStatus(any(), eq(PushNotificationStatusEnum.AVAILABLE), eq(PAGE_REQUEST));
     }
 
     @Test
@@ -93,7 +97,7 @@ public class PushNotificationServiceTest {
         Date date = new Date();
         pushNotificationService.findAllByDateBeforeAndStatus(date, PushNotificationStatusEnum.AVAILABLE);
         verify(pushNotificationRepository, times(1))
-                .findAllByDateBeforeAndStatus(date, PushNotificationStatusEnum.AVAILABLE);
+                .findAllByDateBeforeAndStatus(date, PushNotificationStatusEnum.AVAILABLE, PAGE_REQUEST);
     }
 
 

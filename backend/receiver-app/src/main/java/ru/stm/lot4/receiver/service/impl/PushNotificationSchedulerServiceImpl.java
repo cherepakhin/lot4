@@ -75,7 +75,7 @@ public class PushNotificationSchedulerServiceImpl implements PushNotificationSch
 
                 @Override
                 public void onSuccess(SendResult<String, String> stringStringSendResult) {
-                log.debug("success send pushNotification to kafka. ID = {}",
+                log.info("success send pushNotification to kafka. ID = {}",
                         pushNotificationEntity.getId());
             }
         };

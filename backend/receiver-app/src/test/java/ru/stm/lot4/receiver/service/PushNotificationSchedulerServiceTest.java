@@ -1,6 +1,7 @@
 package ru.stm.lot4.receiver.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -33,6 +34,8 @@ public class PushNotificationSchedulerServiceTest {
     private PushNotificationMapper mapper;
     private PushNotificationEntity pushNotification;
 
+    ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
+
     @BeforeEach
     void initService() {
         this.mapper = Mappers.getMapper(PushNotificationMapper.class);
@@ -49,7 +52,6 @@ public class PushNotificationSchedulerServiceTest {
         pushNotification.setTitle("title");
         List<PushNotificationEntity> pushNotificationEntities = Collections.singletonList(pushNotification);
         when(pushNotificationService.receiveActualAvailablePushNotification()).thenReturn(pushNotificationEntities);
-        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
         pushNotificationSchedulerService = new PushNotificationSchedulerServiceImpl(
                 pushNotificationService,
                 scheduledThreadPoolExecutor,
@@ -61,5 +63,10 @@ public class PushNotificationSchedulerServiceTest {
     void test_scheduled_receive_data() throws JsonProcessingException, InterruptedException {
         Thread.sleep(3000);
         verify(pushNotificationSenderService, atLeast(2)).send(eq(mapper.toDTO(pushNotification)), any());
+    }
+
+    @AfterEach()
+    void after(){
+        scheduledThreadPoolExecutor.shutdownNow();
     }
 }
