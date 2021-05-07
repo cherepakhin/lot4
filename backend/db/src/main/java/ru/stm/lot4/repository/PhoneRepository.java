@@ -18,5 +18,6 @@ public interface PhoneRepository extends JpaRepository<PhoneEntity, Long> {
     Integer deleteByToken(String token);
 
     @Cacheable(cacheNames = "phones", key = "#number")
-    List<PhoneEntity> findByNumber(String number);
+    List<PhoneEntity> findByNumberAndIsActive(String number, boolean isActive);
+
 }

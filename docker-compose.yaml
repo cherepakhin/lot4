@@ -28,20 +28,37 @@ services:
       - '5432:5432'
     volumes:
       - './init.sql:/docker-entrypoint-initdb.d/init.sql'
-  device-app:
+
+  device-app1:
     image: 'device-app:latest'
     environment:
+      EUREKA_HOST: http://register-app:8761/eureka
       PG_URL: jdbc:postgresql://db:5432/db
       PG_USER: postgres
       PG_PASSWORD: admin
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
+      REDIS_TTL: 10
+    links:
+      - db
+
+  device-app2:
+    image: 'device-app:latest'
+    environment:
+      EUREKA_HOST: http://register-app:8761/eureka
+      PG_URL: jdbc:postgresql://db:5432/db
+      PG_USER: postgres
+      PG_PASSWORD: admin
+      GRAYLOG_HOST: graylog
+      GRAYLOG_PORT: '12201'
+      REDIS_TTL: 10
     links:
       - db
 
   notify-app:
     image: 'notify-app:latest'
     environment:
+      EUREKA_HOST: http://register-app:8761/eureka
       KAFKA_HOST: kafka:9092
       KAFKA_TOPIC: lot4_notify
       GRAYLOG_HOST: graylog
@@ -64,6 +81,7 @@ services:
       GRAYLOG_PORT: '12201'
       REDIS_HOST: redis
       REDIS_PORT: '6379'
+      REDIS_TTL: 10
     links:
       - db
       - kafka
@@ -84,11 +102,13 @@ services:
   statistic-app:
     image: 'statistic-app:latest'
     environment:
+      EUREKA_HOST: http://register-app:8761/eureka
       PG_URL: jdbc:postgresql://db:5432/db
       PG_USER: postgres
       PG_PASSWORD: admin
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
+      REDIS_TTL: 10
     links:
       - db
 
@@ -101,9 +121,13 @@ services:
 
   register-app:
     image: 'register-app:latest'
+    ports:
+      - "8761:8761"
 
   gateway-app:
     image: 'gateway-app:latest'
+    environment:
+      EUREKA_HOST: http://register-app:8761/eureka
     ports:
       - '8080:8080'
     links:
