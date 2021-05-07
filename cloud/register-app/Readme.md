@@ -1,0 +1,1 @@
+#Обнаружение сервисов (Service discovery)

@@ -5,9 +5,9 @@
 | PG_URL |jdbc:postgresql://localhost:5432/db| Хост PostgreSQL|
 | PG_USER |postgres| Имя пользователя PostgreSQL |
 | PG_PASSWORD |admin| Пароль PostgreSQL |
-| REDIS_HOST |127.0.0.1| Адрес сервиса кэширования Redis |
-| REDIS_PORT |6379| Порт сервиса кэширования Redis |
-| REDIS_TTL |-1| Время жизни закешированного значения. По умолчанию "навсегда" |
+| REDIS_HOST |localhost| Хост Redis |
+| REDIS_PORT |6379| Порт Redis |
+| REDIS_TTL |-1| время жизни кэша |
 
 ### Метрики
 

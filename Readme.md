@@ -10,6 +10,8 @@
 - [Отправка в FCM](sender-app/Readme.md)
 - [Получение статистики](statistic-app/Readme.md)
 - [Web-интерфейс](front-app/README.md)
+- [Обнаружение сервисов (Service discovery)](cloud/register-app)
+- [Единая точка доступа (API gateway)](cloud/gateway-app)
 
 ![Схема](doc/diag.png)
 

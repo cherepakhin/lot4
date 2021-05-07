@@ -31,7 +31,7 @@ management:
 
 
 cache:
-  host: ${REDIS_HOST:redis}
+  host: ${REDIS_HOST:localhost}
   port: ${REDIS_PORT:6379}
   ttl: ${REDIS_TTL:-1}
 

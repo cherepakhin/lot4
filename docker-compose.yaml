@@ -38,6 +38,8 @@ services:
       PG_PASSWORD: admin
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
       REDIS_TTL: 10
     links:
       - db
@@ -51,6 +53,8 @@ services:
       PG_PASSWORD: admin
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
       REDIS_TTL: 10
     links:
       - db
@@ -80,7 +84,7 @@ services:
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
       REDIS_HOST: redis
-      REDIS_PORT: '6379'
+      REDIS_PORT: 6379
       REDIS_TTL: 10
     links:
       - db
@@ -108,6 +112,8 @@ services:
       PG_PASSWORD: admin
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
       REDIS_TTL: 10
     links:
       - db
