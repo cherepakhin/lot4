@@ -50,8 +50,6 @@ services:
       KAFKA_TOPIC: lot4_notify
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
-    ports:
-      - '8085:8080'
     links:
       - kafka
       - graylog
@@ -70,8 +68,6 @@ services:
       GRAYLOG_PORT: '12201'
       REDIS_HOST: redis
       REDIS_PORT: '6379'
-    ports:
-      - '8082:8080'
     links:
       - db
       - kafka
@@ -85,8 +81,6 @@ services:
       KAFKA_NAME_GROUP: lot4_senders
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
-    ports:
-      - '8083:8080'
     links:
       - kafka
       - graylog
@@ -105,12 +99,23 @@ services:
       - '8084:8080'
     links:
       - db
-  front-app:
-    image: 'front-app:1.0.0'
+
+  frontend:
+    image: 'frontend:1.0.0'
     ports:
       - '4200:4200'
     links:
-      - statistic-app
+      - gateway-app
+
+  register-app:
+    image: 'register-app:latest'
+
+  gateway-app:
+    image: 'gateway-app:latest'
+    ports:
+      - '8080:8080'
+    links:
+      - register-app
 
   mongodb:
     image: mongo:3
