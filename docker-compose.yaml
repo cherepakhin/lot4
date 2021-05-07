@@ -66,6 +66,8 @@ services:
       KAFKA_GROUP_NOTIFY: lot4_group_notify
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
     ports:
       - '8082:8080'
     links:
@@ -144,3 +146,10 @@ services:
       - 514:514/udp
       - 12201:12201
       - 12201:12201/udp
+  redis:
+    hostname: redis
+    image: bitnami/redis:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379:6379

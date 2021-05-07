@@ -10,6 +10,8 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
+
 import static ru.stm.lot4.constants.QueryConstants.SELECT_APPLICATION_STATISTIC;
 
 @Setter
@@ -31,7 +33,7 @@ import static ru.stm.lot4.constants.QueryConstants.SELECT_APPLICATION_STATISTIC;
                 })
         }
 )
-public class MobileApplicationEntity {
+public class MobileApplicationEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
