@@ -36,6 +36,8 @@ services:
       PG_PASSWORD: admin
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
     ports:
       - '8081:8080'
     links:
@@ -97,6 +99,8 @@ services:
       PG_PASSWORD: admin
       GRAYLOG_HOST: graylog
       GRAYLOG_PORT: '12201'
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
     ports:
       - '8084:8080'
     links:
@@ -153,3 +157,13 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
       - 6379:6379
+
+  gateway-app:
+    image: 'gateway-app:latest'
+    ports:
+      - '8080:8080'
+
+  register-app:
+    image: 'register-app:latest'
+    ports:
+      - '8761:8761'
