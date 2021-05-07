@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import ru.stm.lot4.receiver.service.PushNotificationSenderService;
+import ru.stm.lot4.receiver.service.impl.PushNotificationKafkaSenderServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +19,8 @@ public class KafkaProducerConfig {
 
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
+    @Value(value = "${kafka.topic}")
+    private String topic;
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
@@ -38,4 +42,8 @@ public class KafkaProducerConfig {
         return new KafkaTemplate<>(producerFactory);
     }
 
+    @Bean
+    public PushNotificationSenderService pushNotificationSenderService(KafkaTemplate<String, String> kafkaTemplate) {
+        return new PushNotificationKafkaSenderServiceImpl(kafkaTemplate,topic);
+    }
 }
